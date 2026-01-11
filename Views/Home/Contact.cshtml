@@ -1,0 +1,317 @@
+<!-- Hero Section -->
+<div class="position-relative bg-dark text-white">
+  <img src="/taskopru_sarimsak01.jpg" class="position-absolute w-100 h-100 top-0 start-0" style="object-fit: cover; opacity: 0.3;" alt="İletişim">
+  <div class="container position-relative">
+    <div class="row">
+      <div class="col-lg-8 mx-auto text-center animate-on-scroll" data-animation="fade-up">
+        <h1 class="display-3 fw-bold mb-3">Bizimle İletişime Geçin</h1>
+        <p class="lead fs-4 mb-0">Size yardımcı olmaktan mutluluk duyarız. Sorularınız için buradayız!</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- İletişim Bilgileri Kartları -->
+<section class="py-5" style="margin-top: -50px;">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-md-4 animate-on-scroll" data-animation="fade-up" data-delay="0">
+        <div class="card border-0 shadow-lg h-100 text-center p-4">
+          <div class="card-body">
+            <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-4" 
+                 style="width: 80px; height: 80px;">
+              <span class="display-5">📞</span>
+            </div>
+            <h5 class="fw-bold mb-3">Telefon</h5>
+            <p class="text-muted mb-2">Bizi hemen arayın</p>
+            <a href="tel:+905551234567" class="h5 text-primary text-decoration-none fw-bold">
+              +90 555 123 45 67
+            </a>
+            <p class="text-muted small mt-3 mb-0">Pzt-Cmt: 09:00 - 18:00</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 animate-on-scroll" data-animation="fade-up" data-delay="100">
+        <div class="card border-0 shadow-lg h-100 text-center p-4">
+          <div class="card-body">
+            <div class="bg-success bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-4" 
+                 style="width: 80px; height: 80px;">
+              <span class="display-5">✉️</span>
+            </div>
+            <h5 class="fw-bold mb-3">E-posta</h5>
+            <p class="text-muted mb-2">7/24 mesaj gönderin</p>
+            <a href="mailto:info@sasasarimsak.com" class="h5 text-primary text-decoration-none fw-bold">
+              info@sasasarimsak.com
+            </a>
+            <p class="text-muted small mt-3 mb-0">24 saat içinde yanıt</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 animate-on-scroll" data-animation="fade-up" data-delay="200">
+        <div class="card border-0 shadow-lg h-100 text-center p-4">
+          <div class="card-body">
+            <div class="bg-warning bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-4" 
+                 style="width: 80px; height: 80px;">
+              <span class="display-5">📍</span>
+            </div>
+            <h5 class="fw-bold mb-3">Adres</h5>
+            <p class="text-muted mb-2">Bizi ziyaret edin</p>
+            <p class="h6 text-dark mb-2">Taşköprü Mah.</p>
+            <p class="text-muted mb-0">Kastamonu, Türkiye 37300</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- İletişim Formu & Harita -->
+<section class="py-5 bg-light">
+  <div class="container">
+    <div class="row g-5">
+      <!-- İletişim Formu -->
+      <div class="col-lg-6 animate-on-scroll" data-animation="slide-left">
+        <div class="bg-white p-4 p-lg-5 rounded-4 shadow">
+          <h2 class="fw-bold mb-4">Mesaj Gönderin</h2>
+          <p class="text-muted mb-4">Formu doldurun, en kısa sürede size geri dönelim.</p>
+          
+          <form>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label for="firstName" class="form-label fw-semibold">Ad</label>
+                <input type="text" class="form-control form-control-lg" id="firstName" placeholder="Adınız" required>
+              </div>
+              <div class="col-md-6">
+                <label for="lastName" class="form-label fw-semibold">Soyad</label>
+                <input type="text" class="form-control form-control-lg" id="lastName" placeholder="Soyadınız" required>
+              </div>
+              <div class="col-12">
+                <label for="email" class="form-label fw-semibold">E-posta</label>
+                <input type="email" class="form-control form-control-lg" id="email" placeholder="ornek@email.com" required>
+              </div>
+              <div class="col-12">
+                <label for="phone" class="form-label fw-semibold">Telefon</label>
+                <input type="tel" class="form-control form-control-lg" id="phone" placeholder="+90 5XX XXX XX XX">
+              </div>
+              <div class="col-12">
+                <label for="subject" class="form-label fw-semibold">Konu</label>
+                <select class="form-select form-select-lg" id="subject" required>
+                  <option selected disabled value="">Konu seçin...</option>
+                  <option value="1">Ürün Bilgisi</option>
+                  <option value="2">Toptan Satış</option>
+                  <option value="3">Sipariş Takibi</option>
+                  <option value="4">Öneri & Şikayet</option>
+                  <option value="5">Diğer</option>
+                </select>
+              </div>
+              <div class="col-12">
+                <label for="message" class="form-label fw-semibold">Mesajınız</label>
+                <textarea class="form-control form-control-lg" id="message" rows="5" 
+                          placeholder="Mesajınızı buraya yazın..." required></textarea>
+              </div>
+              <div class="col-12">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="consent" required>
+                  <label class="form-check-label small text-muted" for="consent">
+                    <a href="#" class="text-primary">KVKK Aydınlatma Metni</a>'ni okudum ve kabul ediyorum.
+                  </label>
+                </div>
+              </div>
+              <div class="col-12">
+                <button type="submit" class="btn btn-primary btn-lg w-100 py-3 fw-semibold">
+                  Mesajı Gönder
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Harita & Ek Bilgiler -->
+      <div class="col-lg-6 animate-on-scroll" data-animation="slide-right">
+        <!-- Harita -->
+        <div class="bg-secondary rounded-4 overflow-hidden shadow mb-4" style="height: 350px;">
+          <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d97180.91114535362!2d34.35!3d41.51!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4088d0c0c0c0c0c1%3A0x0!2sTaskopru!5e0!3m2!1str!2str!4v1234567890"
+            width="100%" 
+            height="100%" 
+            style="border:0;" 
+            allowfullscreen="" 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+
+        <!-- Çalışma Saatleri -->
+        <div class="bg-white p-4 rounded-4 shadow mb-4">
+          <h5 class="fw-bold mb-3">
+            <span class="text-primary">🕐</span> Çalışma Saatleri
+          </h5>
+          <ul class="list-unstyled mb-0">
+            <li class="d-flex justify-content-between py-2 border-bottom">
+              <span class="fw-semibold">Pazartesi - Cuma</span>
+              <span class="text-muted">09:00 - 18:00</span>
+            </li>
+            <li class="d-flex justify-content-between py-2 border-bottom">
+              <span class="fw-semibold">Cumartesi</span>
+              <span class="text-muted">09:00 - 15:00</span>
+            </li>
+            <li class="d-flex justify-content-between py-2">
+              <span class="fw-semibold">Pazar</span>
+              <span class="text-danger fw-semibold">Kapalı</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Sosyal Medya -->
+        <div class="bg-white p-4 rounded-4 shadow">
+          <h5 class="fw-bold mb-3">Sosyal Medya</h5>
+          <p class="text-muted mb-3">Bizi sosyal medyada takip edin!</p>
+          <div class="d-flex gap-2">
+            <a href="#" class="btn btn-outline-primary btn-lg flex-fill">
+              <span class="fw-bold">f</span> Facebook
+            </a>
+            <a href="#" class="btn btn-outline-danger btn-lg flex-fill">
+              <span class="fw-bold">ig</span> Instagram
+            </a>
+            <a href="#" class="btn btn-outline-info btn-lg flex-fill">
+              <span class="fw-bold">t</span> Twitter
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SSS (Sık Sorulan Sorular) -->
+<section class="py-5">
+  <div class="container">
+    <div class="text-center mb-5 animate-on-scroll" data-animation="fade-up">
+      <h2 class="display-5 fw-bold mb-3">Sık Sorulan Sorular</h2>
+      <p class="lead text-muted">Aklınızdaki sorulara hızlı yanıtlar</p>
+    </div>
+
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="accordion accordion-flush" id="faqAccordion">
+          <div class="accordion-item border rounded-3 mb-3 shadow-sm animate-on-scroll" data-animation="fade-up" data-delay="0">
+            <h2 class="accordion-header">
+              <button class="accordion-button fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                Siparişim ne zaman kargoya verilir?
+              </button>
+            </h2>
+            <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+              <div class="accordion-body text-muted">
+                Siparişleriniz aynı gün içinde kargoya verilir. Hafta sonu verilen siparişler pazartesi günü kargoya teslim edilir.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item border rounded-3 mb-3 shadow-sm animate-on-scroll" data-animation="fade-up" data-delay="100">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                Toptan satış yapıyor musunuz?
+              </button>
+            </h2>
+            <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+              <div class="accordion-body text-muted">
+                Evet, toptan satış yapmaktayız. Detaylı bilgi için lütfen bizimle iletişime geçin. Özel fiyat tekliflerimiz mevcuttur.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item border rounded-3 mb-3 shadow-sm animate-on-scroll" data-animation="fade-up" data-delay="200">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                Ürünleriniz organik sertifikalı mı?
+              </button>
+            </h2>
+            <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+              <div class="accordion-body text-muted">
+                Tüm ürünlerimiz organik tarım sertifikasına sahiptir. Sertifika belgelerimizi talep edebilirsiniz.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item border rounded-3 mb-3 shadow-sm animate-on-scroll" data-animation="fade-up" data-delay="300">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                İade ve değişim politikanız nedir?
+              </button>
+            </h2>
+            <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+              <div class="accordion-body text-muted">
+                Ürünlerimizi teslim aldıktan sonra 15 gün içinde iade edebilirsiniz. Ürün ambalajının açılmamış olması gerekmektedir.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-5 bg-primary bg-gradient text-white">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-8 text-center text-lg-start mb-4 mb-lg-0 animate-on-scroll" data-animation="slide-left">
+        <h2 class="display-5 fw-bold mb-3">Hala Sorularınız mı Var?</h2>
+        <p class="lead mb-0">Size yardımcı olmaktan mutluluk duyarız. Bizi arayın veya ziyaret edin!</p>
+      </div>
+      <div class="col-lg-4 text-center text-lg-end animate-on-scroll" data-animation="slide-right">
+        <a href="tel:+905551234567" class="btn btn-light btn-lg px-5 py-3 fw-semibold shadow">
+          Hemen Ara
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+/* Form stilleri */
+.form-control:focus,
+.form-select:focus {
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15);
+}
+
+/* Accordion stilleri */
+.accordion-button:not(.collapsed) {
+  background-color: #f8f9fa;
+  color: #0d6efd;
+}
+
+.accordion-button:focus {
+  box-shadow: none;
+  border-color: rgba(0,0,0,.125);
+}
+
+/* Sosyal medya butonları */
+.btn-outline-primary:hover,
+.btn-outline-danger:hover,
+.btn-outline-info:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* Kart hover efekti */
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1) !important;
+}
+
+/* Responsive */
+@@media (max-width: 768px) {
+  .card:hover {
+    transform: none;
+  }
+}
+</style>

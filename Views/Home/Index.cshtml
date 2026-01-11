@@ -1,0 +1,190 @@
+    <div class="container-fluid px-0 py-0">
+<div id="carouselExampleCaptions" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="5000">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="3" aria-label="Slide 4"></button>
+    </div>
+    
+    <div class="carousel-inner">
+      <!-- İlk Slide - Video -->
+      <div class="carousel-item active">
+        <video class="d-block w-100" autoplay muted loop playsinline>
+          <source src="/sasa-sarimsak-overview.mp4" type="video/mp4">
+        </video>
+        <div class="carousel-caption d-flex flex-column justify-content-center align-items-center h-100 text-center pb-5">
+          <div class="bg-dark bg-opacity-50 p-4 p-md-5 rounded-4 shadow-lg slide-fade-in">
+            <h1 class="display-4 fw-bold mb-3 text-white">Doğadan Gelen Saf Sarımsak Lezzeti</h1>
+            <p class="lead fs-5 mb-4 text-white-50">Organik, el yapımı ve taze seçilmiş sarımsaklarımız, zengin besin değerleriyle sağlığınızı destekler ve doğallık sunar.</p>
+            @Html.ActionLink("Şimdi Sipariş Ver", "Index", "Home", null, new { @class = "btn btn-lg btn-light px-5 py-3 fw-semibold shadow" })
+          </div>
+        </div>
+      </div>
+
+      <!-- İkinci Slide -->
+      <div class="carousel-item">
+        <img src="/taskopru_sarimsak0.jpg" class="d-block w-100" alt="Taşköprü Sarımsak">
+        <div class="carousel-caption d-flex flex-column justify-content-center align-items-center h-100 text-center pb-5">
+          <div class="bg-dark bg-opacity-50 p-4 p-md-5 rounded-4 shadow-lg slide-fade-in">
+            <h2 class="display-5 fw-bold mb-3 text-white">Taşköprü'nün En Kaliteli Sarımsağı</h2>
+            <p class="lead fs-5 text-white-50">Yüzyıllık geleneksel yöntemlerle yetiştirilen, doğal ve katkısız sarımsaklar.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Üçüncü Slide -->
+      <div class="carousel-item">
+        <img src="/taskopru_sarimsak01.jpg" class="d-block w-100" alt="Organik Sarımsak">
+        <div class="carousel-caption d-flex flex-column justify-content-center align-items-center h-100 text-center pb-5">
+          <div class="bg-dark bg-opacity-50 p-4 p-md-5 rounded-4 shadow-lg slide-fade-in">
+            <h2 class="display-5 fw-bold mb-3 text-white">%100 Organik ve Doğal</h2>
+            <p class="lead fs-5 text-white-50">Kimyasal gübre ve ilaç kullanılmadan, tamamen organik olarak yetiştirilir.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dördüncü Slide -->
+      <div class="carousel-item">
+        <img src="/taskopru_sarimsak02.jpg" class="d-block w-100" alt="Taze Sarımsak">
+        <div class="carousel-caption d-flex flex-column justify-content-center align-items-center h-100 text-center pb-5">
+          <div class="bg-dark bg-opacity-50 p-4 p-md-5 rounded-4 shadow-lg slide-fade-in">
+            <h2 class="display-5 fw-bold mb-3 text-white">Tarladan Sofranıza</h2>
+            <p class="lead fs-5 text-white-50">Her gün taze hasat edilen sarımsaklar, aynı gün sizlere ulaştırılır.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Önceki</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Sonraki</span>
+    </button>
+</div>
+</div>
+
+<!-- Üretim Süreci -->
+<section class="py-5">
+  <div class="container">
+    <div class="text-center mb-5 animate-on-scroll" data-animation="fade-up">
+      <span class="badge bg-warning mb-3 px-3 py-2">Üretim Sürecimiz</span>
+      <h2 class="display-5 fw-bold mb-3">Tarladan Sofranıza</h2>
+      <p class="lead text-muted">Her aşamada özen ve kalite</p>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-3 animate-on-scroll" data-animation="fade-up" data-delay="0">
+        <div class="text-center">
+          <div class="bg-primary bg-gradient rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 100px; height: 100px;">
+            <span class="display-4 text-white fw-bold">1</span>
+          </div>
+          <h5 class="fw-bold mb-3">Ekim</h5>
+          <p class="text-muted">Seçilmiş tohumlar, en uygun mevsimde bereketli topraklara ekilir.</p>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-3 animate-on-scroll" data-animation="fade-up" data-delay="100">
+        <div class="text-center">
+          <div class="bg-success bg-gradient rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 100px; height: 100px;">
+            <span class="display-4 text-white fw-bold">2</span>
+          </div>
+          <h5 class="fw-bold mb-3">Yetiştirme</h5>
+          <p class="text-muted">Organik yöntemlerle, kimyasal kullanmadan özenle büyütülür.</p>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-3 animate-on-scroll" data-animation="fade-up" data-delay="200">
+        <div class="text-center">
+          <div class="bg-warning bg-gradient rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 100px; height: 100px;">
+            <span class="display-4 text-white fw-bold">3</span>
+          </div>
+          <h5 class="fw-bold mb-3">Hasat</h5>
+          <p class="text-muted">En taze haliyle, el emeğiyle dikkatle hasat edilir.</p>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-3 animate-on-scroll" data-animation="fade-up" data-delay="300">
+        <div class="text-center">
+          <div class="bg-info bg-gradient rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 100px; height: 100px;">
+            <span class="display-4 text-white fw-bold">4</span>
+          </div>
+          <h5 class="fw-bold mb-3">Paketleme</h5>
+          <p class="text-muted">Hijyenik koşullarda paketlenip, aynı gün size ulaştırılır.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="text-center my-5 animate-on-scroll" data-animation="fade-up">
+  <h1 class="display-2 fw-bold mb-3">
+    Organik Sarımsak
+  </h1>
+  <p class="lead text-muted mb-4">
+    Doğadan Sofranıza Sağlık
+  </p>
+  <hr class="w-25 mx-auto border-3 border-primary">
+</div>
+
+
+<!-- Kartlar -->
+<div class="row row-cols-1 row-cols-md-2 g-4 text-center justify-content-center mb-5">
+  <div class="col-md-5 col-lg-5 animate-on-scroll" data-animation="slide-left" data-delay="0">
+    <div class="card h-100 hover-lift">
+      <img src="/taskopru_sarimsak01.jpg" class="card-img-top" alt="Organik Sarımsak">
+      <div class="card-body">
+        <h5 class="card-title fw-bold">Organik Sarımsak</h5>
+        <p class="card-text">Kimyasal ilaç ve gübre kullanılmadan, doğal yöntemlerle yetiştirilen organik sarımsaklarımız sağlığınız için en iyi seçim.</p>
+      </div>
+    </div>
+  </div>
+  
+  <div class="col-md-5 col-lg-5 animate-on-scroll" data-animation="slide-right" data-delay="100">
+    <div class="card h-100 hover-lift">
+      <img src="/taskopru_sarimsak01.jpg" class="card-img-top" alt="Taze Hasat">
+      <div class="card-body">
+        <h5 class="card-title fw-bold">Taze Hasat</h5>
+        <p class="card-text">Her gün tarladan hasat edilen taze sarımsaklar, aynı gün işlenerek size ulaştırılır. Tazelik garantisi.</p>
+      </div>
+    </div>
+  </div>
+  
+  <div class="col-md-5 col-lg-5 animate-on-scroll" data-animation="slide-left" data-delay="200">
+    <div class="card h-100 hover-lift">
+      <img src="/taskopru_sarimsak02.jpg" class="card-img-top" alt="Geleneksel Yöntemler">
+      <div class="card-body">
+        <h5 class="card-title fw-bold">Geleneksel Yöntemler</h5>
+        <p class="card-text">Yüzyıllardır süregelen geleneksel tarım yöntemleriyle, Taşköprü'nün meşhur sarımsağını yetiştiriyoruz.</p>
+      </div>
+    </div>
+  </div>
+  
+  <div class="col-md-5 col-lg-5 animate-on-scroll" data-animation="slide-right" data-delay="300">
+    <div class="card h-100 hover-lift">
+      <img src="/taskopru_sarimsak0.jpg" class="card-img-top" alt="Kalite Garantisi">
+      <div class="card-body">
+        <h5 class="card-title fw-bold">Kalite Garantisi</h5>
+        <p class="card-text">Her sarımsak başı özenle seçilir ve kalite kontrolünden geçirilir. %100 müşteri memnuniyeti garantisi.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA Section -->
+<section class="py-5 bg-primary bg-gradient text-white">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-8 text-center text-lg-start mb-4 mb-lg-0 animate-on-scroll" data-animation="slide-left">
+        <h2 class="display-5 fw-bold mb-3">Doğal ve Organik Sarımsak için Bize Katılın!</h2>
+        <p class="lead mb-0">Sağlıklı yaşamın kapılarını aralayın, doğanın tadını çıkarın.</p>
+      </div>
+      <div class="col-lg-4 text-center text-lg-end animate-on-scroll" data-animation="slide-right">
+        @Html.ActionLink("Ürünlerimizi İnceleyin", "Products", "Home", null, new { @class = "btn btn-light btn-lg px-5 py-3 fw-semibold shadow" })
+      </div>
+    </div>
+  </div>
+</section>

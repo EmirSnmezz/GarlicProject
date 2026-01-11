@@ -1,0 +1,36 @@
+## [Bb]in ve [Oo]bj klasörleri (Derleme çıktıları)
+[Bb]in/
+[Oo]bj/
+
+## Kullanıcıya özel ayarlar
+*.user
+*.userosscache
+*.sln.docstates
+.vs/
+.vscode/
+
+## Yayınlama çıktıları (Publish)
+publish/
+*.publishsettings
+
+## NuGet paketleri
+*.nupkg
+# Eğer paketleri manuel lib klasörüne indirdiysen (Bootstrap gibi) 
+# aşağıdaki satırı yorum satırı yapabilirsin.
+# node_modules/
+
+## Log dosyaları
+*.log
+
+## İşletim sistemi dosyaları
+.DS_Store
+Thumbs.db
+
+## Veritabanı ve Geçici Dosyalar
+*.db
+*.sqlite
+*.tmp
+
+## Hassas bilgiler (Önemli!)
+# appsettings.Development.json gibi dosyaları bazen dışarıda tutmak istersin
+# appsettings.json

@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SASA Sarımsak</title>
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <style>
+      /* ==================== GLOBAL STYLES ==================== */
+      * {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      body {
+        overflow-x: hidden;
+        scroll-behavior: smooth;
+      }
+
+      /* ==================== NAVBAR ==================== */
+      .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1030;
+        background: rgba(17, 24, 39, 0.85);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        padding: 1rem 0;
+        transition: background 0.3s ease, box-shadow 0.3s ease;
+        will-change: background, box-shadow;
+      }
+
+      .navbar.scrolled {
+        background: rgba(17, 24, 39, 0.95);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      }
+
+      .navbar-logo {
+        width: 50px;
+        height: 50px;
+        object-fit: contain;
+        opacity: 0.95;
+        transition: transform 0.3s ease, opacity 0.3s ease;
+      }
+
+      .navbar-logo:hover {
+        opacity: 1;
+        transform: rotate(5deg) scale(1.05);
+      }
+
+      .navbar-toggler {
+        padding: 0.5rem;
+        border: 0;
+      }
+
+      .navbar-toggler:focus {
+        box-shadow: none;
+      }
+
+      .nav-link-custom {
+        color: #E5E7EB !important;
+        font-size: 1.05rem;
+        font-weight: 500;
+        padding: 0.6rem 1.5rem !important;
+        border-radius: 8px;
+        text-decoration: none;
+        position: relative;
+        overflow: hidden;
+        transition: color 0.3s ease, background 0.3s ease, transform 0.3s ease;
+        letter-spacing: 0.3px;
+      }
+
+      .nav-link-custom::before {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: 0;
+        height: 2px;
+        background: linear-gradient(90deg, #60A5FA, #3B82F6);
+        transform: translateX(-50%);
+        transition: width 0.3s ease;
+      }
+
+      .nav-link-custom:hover {
+        color: #60A5FA !important;
+        background: rgba(96, 165, 250, 0.1);
+        transform: translateY(-2px);
+      }
+
+      .nav-link-custom:hover::before {
+        width: 80%;
+      }
+
+      .nav-link-custom:active {
+        transform: translateY(0);
+      }
+
+      /* ==================== CAROUSEL ==================== */
+      #carouselExampleCaptions {
+        width: 100%;
+        overflow: hidden;
+      }
+
+      .carousel-item {
+        height: 100vh;
+        min-height: 500px;
+        will-change: transform;
+      }
+
+      .carousel-item video,
+      .carousel-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        will-change: transform;
+      }
+
+      .carousel-fade .carousel-item {
+        opacity: 0;
+        transition: opacity 0.6s ease-in-out;
+      }
+
+      .carousel-fade .carousel-item.active {
+        opacity: 1;
+      }
+
+      .collapsing {
+        transition: height 0.35s ease;
+      }
+
+      /* ==================== ANIMATIONS ==================== */
+      @@keyframes slideUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .carousel-item.active .slide-fade-in {
+        animation: slideUp 0.8s ease-out;
+      }
+
+      .animate-on-scroll {
+        opacity: 0;
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        will-change: opacity, transform;
+      }
+
+      .animate-on-scroll.animated {
+        opacity: 1;
+      }
+
+      .animate-on-scroll[data-animation="fade-up"] {
+        transform: translateY(40px);
+      }
+
+      .animate-on-scroll[data-animation="fade-up"].animated {
+        transform: translateY(0);
+      }
+
+      .animate-on-scroll[data-animation="slide-left"] {
+        transform: translateX(-50px);
+      }
+
+      .animate-on-scroll[data-animation="slide-left"].animated {
+        transform: translateX(0);
+      }
+
+      .animate-on-scroll[data-animation="slide-right"] {
+        transform: translateX(50px);
+      }
+
+      .animate-on-scroll[data-animation="slide-right"].animated {
+        transform: translateX(0);
+      }
+
+      /* ✅ DÜZELTME: Delay'ler 100ms, 200ms, 300ms olmalı */
+      [data-delay="0"] { transition-delay: 0ms; }
+      [data-delay="100"] { transition-delay: 100ms; }
+      [data-delay="200"] { transition-delay: 200ms; }
+      [data-delay="300"] { transition-delay: 300ms; }
+
+      /* ==================== CARDS ==================== */
+      .card {
+        border: none;
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .card-img-top {
+        transition: transform 0.4s ease;
+        will-change: transform;
+      }
+
+      .card:hover .card-img-top {
+        transform: scale(1.05);
+      }
+
+      .hover-lift {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .hover-lift:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 40px rgba(0,0,0,0.15) !important;
+      }
+
+      /* ==================== COUNTERS ==================== */
+      .counter-box {
+        position: relative;
+        padding: 20px;
+      }
+
+      .counter-box h2 {
+        transition: transform 0.3s ease;
+      }
+
+      .counter-box:hover h2 {
+        transform: scale(1.1);
+      }
+
+      /* ==================== RESPONSIVE ==================== */
+      @@media (max-width: 991px) {
+        .navbar-collapse {
+          background: rgba(17, 24, 39, 0.98);
+          margin-top: 1rem;
+          padding: 1rem;
+          border-radius: 8px;
+        }
+
+        .navbar-nav {
+          align-items: stretch;
+        }
+
+        .nav-link-custom {
+          text-align: center;
+          margin: 0.25rem 0;
+        }
+
+        /* Mobilde carousel yüksekliğini düşür */
+        .carousel-item {
+          height: 70vh;
+          min-height: 400px;
+        }
+
+        /* Mobilde animasyonları basitleştir */
+        .animate-on-scroll {
+          transition: opacity 0.4s ease-out;
+        }
+
+        .animate-on-scroll[data-animation="slide-left"],
+        .animate-on-scroll[data-animation="slide-right"] {
+          transform: translateY(20px);
+        }
+
+        /* Hover efektlerini mobilde devre dışı bırak */
+        .hover-lift:hover {
+          transform: none;
+        }
+
+        .card:hover .card-img-top {
+          transform: none;
+        }
+      }
+
+      @@media (min-width: 992px) {
+        .navbar-nav {
+          gap: 0.5rem;
+        }
+      }
+
+      /* Tablet landscape için özel ayar */
+      @@media (min-width: 768px) and (max-width: 991px) {
+        .carousel-item {
+          height: 80vh;
+        }
+      }
+
+      @@media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+          scroll-behavior: auto !important;
+        }
+      }
+    </style>
+</head>
+<body class="d-flex flex-column min-vh-100">
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark shadow-lg">
+    <div class="container-fluid px-4">
+      <a class="navbar-brand d-flex align-items-center" href="@Url.Action("Index", "Home")">
+        <img src="/sasa-icon.jpeg" alt="SASA Sarımsak Logo" class="navbar-logo" />
+      </a>
+
+      <button class="navbar-toggler" type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#mainNavbar"
+              aria-controls="mainNavbar"
+              aria-expanded="false"
+              aria-label="Menüyü Aç/Kapat">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse justify-content-center" id="mainNavbar">
+        <ul class="navbar-nav gap-2">
+          <li class="nav-item">
+            @Html.ActionLink("Anasayfa", "Index", "Home", null, new { @class = "nav-link-custom" })
+          </li>
+          <li class="nav-item">
+            @Html.ActionLink("Hakkımızda", "AboutUs", "Home", null, new { @class = "nav-link-custom" })
+          </li>
+          <li class="nav-item">
+            @Html.ActionLink("Ürünler", "Products", "Home", null, new { @class = "nav-link-custom" })
+          </li>
+          <li class="nav-item">
+            @Html.ActionLink("İletişim", "Contact", "Home", null, new { @class = "nav-link-custom" })
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="container-fluid mt-3">
+    @RenderBody()
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-dark text-white pt-5 pb-3 mt-5">
+    <div class="container-fluid">
+      <div class="row">
+        <!-- Şirket Bilgileri -->
+        <div class="col-md-4 mb-4">
+          <img src="/sasa-icon.jpeg" class="mb-3" style="width: 100px;" alt="SASA Sarımsak Logo">
+          <h5 class="fw-bold mb-3">SASA Sarımsak</h5>
+          <p class="text-white-50 mb-3">
+            Doğal ve organik sarımsak ürünleri ile sağlıklı yaşama katkı sağlıyoruz. 
+            Kalite ve güven bizim önceliğimizdir.
+          </p>
+
+          <!-- Sosyal Medya -->
+          <div class="d-flex gap-2">
+            <a href="#" class="btn btn-outline-light btn-sm rounded-circle d-flex align-items-center justify-content-center"
+               style="width: 40px; height: 40px;" aria-label="Facebook">
+              <span aria-hidden="true">f</span>
+            </a>
+            <a href="#" class="btn btn-outline-light btn-sm rounded-circle d-flex align-items-center justify-content-center"
+               style="width: 40px; height: 40px;" aria-label="Instagram">
+              <span aria-hidden="true">ig</span>
+            </a>
+            <a href="#" class="btn btn-outline-light btn-sm rounded-circle d-flex align-items-center justify-content-center"
+               style="width: 40px; height: 40px;" aria-label="Twitter">
+              <span aria-hidden="true">t</span>
+            </a>
+            <a href="#" class="btn btn-outline-light btn-sm rounded-circle d-flex align-items-center justify-content-center"
+               style="width: 40px; height: 40px;" aria-label="LinkedIn">
+              <span aria-hidden="true">in</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Hızlı Linkler -->
+        <div class="col-md-2 col-6 mb-4">
+          <h5 class="fw-bold mb-3">Hızlı Linkler</h5>
+          <ul class="list-unstyled">
+            <li class="mb-2">@Html.ActionLink("Anasayfa", "Index", "Home", null, new { @class = "text-white-50 text-decoration-none" })</li>
+            <li class="mb-2">@Html.ActionLink("Hakkımızda", "AboutUs", "Home", null, new { @class = "text-white-50 text-decoration-none" })</li>
+            <li class="mb-2">@Html.ActionLink("Ürünler", "Products", "Home", null, new { @class = "text-white-50 text-decoration-none" })</li>
+            <li class="mb-2">@Html.ActionLink("Blog", "Blog", "Home", null, new { @class = "text-white-50 text-decoration-none" })</li>
+            <li class="mb-2">@Html.ActionLink("İletişim", "Contact", "Home", null, new { @class = "text-white-50 text-decoration-none" })</li>
+          </ul>
+        </div>
+
+        <!-- Ürünler -->
+        <div class="col-md-3 col-6 mb-4">
+          <h5 class="fw-bold mb-3">Ürünlerimiz</h5>
+          <ul class="list-unstyled">
+            <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Taze Sarımsak</a></li>
+            <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Kuru Sarımsak</a></li>
+            <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Sarımsak Tozu</a></li>
+            <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Organik Sarımsak</a></li>
+            <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Toptan Satış</a></li>
+          </ul>
+        </div>
+
+        <!-- İletişim Bilgileri -->
+        <div class="col-md-3 mb-4">
+          <h5 class="fw-bold mb-3">İletişim</h5>
+          <ul class="list-unstyled text-white-50 small">
+            <li class="mb-3">
+              <strong>📍 Adres:</strong><br>
+              Taşköprü, Kastamonu, Türkiye
+            </li>
+            <li class="mb-3">
+              <strong>📞 Telefon:</strong><br>
+              <a href="tel:+905551234567" class="text-white-50 text-decoration-none">+90 555 123 45 67</a>
+            </li>
+            <li class="mb-3">
+              <strong>✉️ E-posta:</strong><br>
+              <a href="mailto:info@sasasarimsak.com" class="text-white-50 text-decoration-none">info@sasasarimsak.com</a>
+            </li>
+            <li class="mb-3">
+              <strong>🕐 Çalışma Saatleri:</strong><br>
+              Pzt-Cmt: 09:00 - 18:00
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <hr class="border-secondary my-4">
+
+      <!-- Copyright -->
+      <div class="row">
+        <div class="col-12 text-center">
+          <p class="text-white-50 mb-0 small">
+            © 2025 SASA Sarımsak. Tüm hakları saklıdır.
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Optimized Scripts -->
+  <script>
+    (function() {
+      'use strict';
+
+      let resizeTimer;
+      let isAnimating = false;
+
+      // Debounce resize events
+      function debounce(func, wait) {
+        return function executedFunction() {
+          const later = function() {
+            clearTimeout(resizeTimer);
+            func();
+          };
+          clearTimeout(resizeTimer);
+          resizeTimer = setTimeout(later, wait);
+        };
+      }
+
+      // Intersection Observer
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      };
+
+      const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting && !isAnimating) {
+            requestAnimationFrame(function() {
+              entry.target.classList.add('animated');
+              observer.unobserve(entry.target);
+            });
+          }
+        });
+      }, observerOptions);
+
+      // Initialize on DOM ready
+      document.addEventListener('DOMContentLoaded', function() {
+        // Scroll animations
+        const animatedElements = document.querySelectorAll('.animate-on-scroll');
+        animatedElements.forEach(function(element) {
+          observer.observe(element);
+        });
+
+        // Navbar scroll effect with throttle
+        const navbar = document.querySelector('.navbar');
+        if (navbar) {
+          let ticking = false;
+          
+          window.addEventListener('scroll', function() {
+            if (!ticking) {
+              window.requestAnimationFrame(function() {
+                if (window.scrollY > 50) {
+                  navbar.classList.add('scrolled');
+                } else {
+                  navbar.classList.remove('scrolled');
+                }
+                ticking = false;
+              });
+              ticking = true;
+            }
+          }, { passive: true });
+        }
+
+        // Optimize carousel on mobile
+        if (window.innerWidth < 992) {
+          const carousel = document.querySelector('#carouselExampleCaptions');
+          if (carousel) {
+            carousel.setAttribute('data-bs-interval', '7000');
+          }
+        }
+      });
+
+      // Handle resize - reset animations if needed
+      window.addEventListener('resize', debounce(function() {
+        // Re-check viewport for carousel optimization
+        const carousel = document.querySelector('#carouselExampleCaptions');
+        if (carousel) {
+          if (window.innerWidth < 992) {
+            carousel.setAttribute('data-bs-interval', '7000');
+          } else {
+            carousel.setAttribute('data-bs-interval', '5000');
+          }
+        }
+      }, 250), { passive: true });
+    })();
+  </script>
+</body>
+</html>
