@@ -1,8 +1,8 @@
 public interface IModel
 {
-    public string Id {get; set;}
+    public string? Id {get;}
 
-    public DateTime CreatedDate {get; set;}
+    public DateTime? CreatedDate {get; set;}
 
-    public DateTime UpdatedDate {get; set;}
+    public DateTime? UpdatedDate {get; set;}
 }

@@ -1,4 +1,4 @@
-public interface SliderContentModel : IContentModel
+public interface ISliderContentModel : IContentModel
 {
     public string ImageUrl {get; set;}
 }
