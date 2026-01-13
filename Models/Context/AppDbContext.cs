@@ -18,6 +18,7 @@ public class AppDbContext : DbContext
             if(entry.State == EntityState.Added)
             {
                 entry.Property(p => p.CreatedDate).CurrentValue = DateTime.UtcNow;
+                entry.Property(p => p.UpdatedDate).CurrentValue = DateTime.UtcNow;
             }
 
             if(entry.State == EntityState.Modified)
