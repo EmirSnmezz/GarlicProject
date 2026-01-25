@@ -1,0 +1,25 @@
+@model SliderModel
+
+@{
+    Layout = "_adminLayout";
+}
+
+<h2>Slider Güncelle</h2>
+
+@using (Html.BeginForm("UpdateSlider", "Admin", FormMethod.Post))
+{
+    @Html.HiddenFor(x => x.Id)
+
+    <div class="mb-3">
+        @Html.LabelFor(x => x.ContentHeader, "Slider Başlığı", new { @class = "form-label" })
+        @Html.TextBoxFor(x => x.ContentHeader, new { @class = "form-control" })
+    </div>
+
+    <div class="mb-3">
+        @Html.LabelFor(x => x.ContentText, "İçerik Metni", new { @class = "form-label" })
+        @Html.TextBoxFor(x => x.ContentText, new { @class = "form-control" })
+    </div>
+
+    <button type="submit" class="btn btn-success">Güncelle</button>
+    <a href="/Admin/Slider" class="btn btn-secondary">İptal</a>
+}
