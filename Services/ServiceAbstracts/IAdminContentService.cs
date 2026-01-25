@@ -1,4 +1,4 @@
 public interface IAdminContentService
 {
-    public IResult AddSlider(SliderContentModel slider);
+    public IResult AddSlider(SliderModel slider);
 }
