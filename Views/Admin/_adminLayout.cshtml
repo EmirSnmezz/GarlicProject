@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <title>SASA Sarımsak - Admin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+    <style>
+        body {
+            overflow-x: hidden;
+        }
+
+        /* Navbar */
+        .admin-navbar {
+            height: 64px;
+            background: #111827;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 240px;
+            min-height: calc(100vh - 64px);
+            background: #1f2937;
+        }
+
+        .sidebar a {
+            color: #d1d5db;
+            padding: 12px 20px;
+            display: block;
+            text-decoration: none;
+        }
+
+        .sidebar a:hover,
+        .sidebar a.active {
+            background: #374151;
+            color: #fff;
+        }
+
+        /* Dropdown Menü */
+        .dropdown-menu {
+            background-color: #374151;
+            border: none;
+        }
+
+        /* Alt menülerin açılma tarzı */
+        .dropdown-submenu {
+            position: relative;
+        }
+
+        .dropdown-submenu .dropdown-menu {
+            top: 0;
+            left: 100%;
+            margin-top: -1px;
+        }
+
+        .dropdown-item:hover {
+            background-color: #575757;
+        }
+
+        /* Content */
+        .content-area {
+            padding: 24px;
+            background: #f9fafb;
+            min-height: calc(100vh - 64px);
+        }
+
+        .sidebar-title {
+            color: #fff;
+            font-size: 20px;
+            font-weight: 600;
+            text-align: center;
+            padding: 20px 0;
+            letter-spacing: 1px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="admin-navbar d-flex align-items-center px-4 text-white justify-content-between">
+    
+        <!-- Sol -->
+        <div class="d-flex align-items-center">
+            <img src="/sasa-icon.jpeg" height="40" class="me-3" />
+            <strong>SASA Sarımsak - Admin</strong>
+        </div>
+
+        <!-- Sağ -->
+        <div class="dropdown">
+            <a class="text-white text-decoration-none dropdown-toggle"
+               href="#"
+               role="button"
+               data-bs-toggle="dropdown">
+                <i class="fa-solid fa-user me-1"></i>
+                Admin
+            </a>
+
+            <ul class="dropdown-menu dropdown-menu-end">
+                <li>
+                    <a class="dropdown-item" href="/Admin/Kullanici/Edit/1">
+                        <i class="fa-solid fa-user-gear me-2"></i> Profil
+                    </a>
+                </li>
+                <li><hr class="dropdown-divider"></li>
+                <li>
+                    <a class="dropdown-item text-danger" href="/Account/Logout">
+                        <i class="fa-solid fa-right-from-bracket me-2"></i> Çıkış Yap
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+    </nav>
+
+    <!-- Page Layout -->
+    <div class="d-flex">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+
+            <div class="sidebar-title"> Yönetim Paneli </div>
+
+            <!-- Anasayfa Yönetimi -->
+            <a href="/Admin/Slider">
+                <i class="fa-solid fa-box me-2"></i> Slider Yönetimi
+            </a>
+
+            <!-- Hakkımızda Yönetimi -->
+            <a href="/Admin/Products">
+                <i class="fa-solid fa-box me-2"></i> Ürün Yönetimi
+            </a>
+
+            <!-- Kategori Yönetimi -->
+            <a href="/Admin/Categories">
+                <i class="fa-solid fa-tags me-2"></i> Kategori Yönetimi
+            </a>
+
+            <!-- Ürün Yönetimi -->
+            <a href="/Admin/Orders">
+                <i class="fa-solid fa-users me-2"></i> Sipariş Yönetimi
+            </a>
+
+            <!-- Kullanıcı Yönetimi -->
+            <a href="/Admin/Users">
+                <i class="fa-solid fa-users me-2"></i> Kullanıcı Yönetimi
+            </a>
+
+            <hr class="text-secondary mx-3" />
+
+            <!-- Çıkış -->
+            <a href="/Account/Logout">
+                <i class="fa-solid fa-right-from-bracket me-2"></i> Çıkış
+            </a>
+        </aside>
+
+        <!-- Content -->
+        <main class="flex-fill content-area">
+            @RenderBody()
+        </main>
+
+    </div>
+
+    <script src="/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
