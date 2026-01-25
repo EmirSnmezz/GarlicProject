@@ -1,0 +1,33 @@
+@using Microsoft.EntityFrameworkCore.Metadata.Internal
+@model ProductModel
+
+@{
+    Layout = "_adminLayout";
+}
+
+<h2>Slider Güncelle</h2>
+
+@using (Html.BeginForm("AddSlider", "Admin", FormMethod.Post))
+{
+    @Html.HiddenFor(x => x.Id)
+
+    <div class="mb-3">
+        @Html.LabelFor(x => x.ProductTitle, "Ürün Başlığı", new { @class = "form-label" })
+        @Html.TextBoxFor(x => x.ProductTitle, new { @class = "form-control" })
+    </div>
+
+    <div class="mb-3">
+        @Html.LabelFor(x => x.ProductDescription, "Ürün Açıklaması", new { @class = "form-label" })
+        @Html.TextBoxFor(x => x.ProductDescription, new { @class = "form-control" })
+    </div>
+
+
+<div class="mb-3">
+        @Html.LabelFor(x => x.ProductDescription, "Kategori Seçin", new { @class = "form-label" })
+        @Html.DropDownListFor(x => x.CategoryId, new SelectList(ViewBag.Categories, "Id", "Name"), "Kategori Seçiniz", new { @class = "form-control" })
+    </div>
+
+
+    <button type="submit" class="btn btn-success">Güncelle</button>
+    <a href="/Admin/Slider" class="btn btn-secondary">İptal</a>
+}
