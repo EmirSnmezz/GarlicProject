@@ -1,0 +1,45 @@
+@using System.Collections
+
+@model List<SliderModel>
+
+@{
+    Layout = "_adminLayout.cshtml";
+    List<SliderModel> result = Model;
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h4>Slider Yönetimi</h4>
+    <a href="AddSlider" class="btn btn-sm btn-primary">
+        <i class="fa-solid fa-plus"></i> Sayfa Ekle
+    </a>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body p-0">
+        <table class="table table-striped mb-0 align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>Başlık</th>
+                    <th>İçerik</th>
+                    <th>Oluşturulma Tarihi</th>
+                    <th class="text-end">Güncelle</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(SliderModel entity in result)
+                {
+                    <tr>
+                        <td> @entity.ContentHeader </td>
+                        <td> @entity.ContentText </td>
+                        <td> @entity.CreatedDate </td>
+                          <td class="text-end">
+                        <a href="@Url.ActionLink("SliderEdit", "Admin", new { id = entity.Id })" class="btn btn-warning">
+                            <i class="fa-solid fa-pen"></i>
+                        </a>
+                    </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
