@@ -1,12 +1,12 @@
 public class AdminContentService : IAdminContentService
 {
-    public ISliderContentDal _sliderContentDal;
-    public AdminContentService(ISliderContentDal sliderContentDal)
+    public ISliderDal _sliderContentDal;
+    public AdminContentService(ISliderDal sliderContentDal)
     {
         _sliderContentDal = sliderContentDal;
     }
 
-    public IResult AddSlider(SliderContentModel slider)
+    public IResult AddSlider(SliderModel slider)
     {
         _sliderContentDal.Add(slider);
 
