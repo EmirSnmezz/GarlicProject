@@ -38,16 +38,27 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEnt
         return null;
     }
 
-    public IQueryable<TEntity> GetAll(Expression<Func<TEntity, bool>> filter)
+    public IQueryable<TEntity> GetAll(Expression<Func<TEntity, bool>> filter = null, params Expression<Func<TEntity, object>>[] includes)
     {
-        IQueryable<TEntity> result = _context.Set<TEntity>().Where(filter);
-
-        if (result is not null)
+        IQueryable<TEntity> result;
+        
+        if(filter is not null)
         {
-            return result;
+         result = _context.Set<TEntity>().Where(filter);   
+         return result;
         }
 
-        return null;
+        result = _context.Set<TEntity>();
+
+         if(includes != null)
+        {
+            foreach(var include in includes)
+            {
+                result = result.Include(include);
+            }
+        }
+
+        return result;
     }
 
     public void Update(TEntity entity)
