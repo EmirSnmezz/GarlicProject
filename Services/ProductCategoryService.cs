@@ -1,8 +1,9 @@
+using System.Diagnostics;
+using System.IO.Compression;
 using System.Linq.Expressions;
 
 public class ProductCategoryService : IProductCategoryModelService
 {
-
     IProductCategoryDal _productCategoryDal;
     public ProductCategoryService(IProductCategoryDal productCategoryDal)
     {
@@ -12,7 +13,6 @@ public class ProductCategoryService : IProductCategoryModelService
     public IResult Add(ProductCategoryModel category)
     {
         _productCategoryDal.Add(category);
-
         return new SuccessResult("Kategori başarıyla eklendi");
     }
 
@@ -22,7 +22,7 @@ public class ProductCategoryService : IProductCategoryModelService
 
         if(result is not null)
         {
-            return new SuccessDataResult<List<ProductCategoryModel>>("Kategoriler başarıyla listelendi", result);
+            return new SuccessDataResult<List<ProductCategoryModel>>(data: result);
         }
 
         return new ErrorDataResult<List<ProductCategoryModel>>("Görüntülenecek Kategori Bulunamadı.");
