@@ -31,8 +31,11 @@
                         <td> @entity.ProductTitle </td>
                         <td> @entity.CreatedDate </td>
                           <td class="text-end">
-                        <a href="@Url.ActionLink("SliderEdit", "Admin", new { id = entity.Id })" class="btn btn-warning">
-                            <i class="fa-solid fa-pen"></i>
+                        <a href="@Url.ActionLink("ProductEdit", "Admin", new { id = entity.Id })" class="btn btn-warning">
+                        <i class="fa-solid fa-pen"></i>
+                        </a>
+                        <a href="@Url.ActionLink("ProductDelete", "Admin", new { id = entity.Id })" class="btn btn-danger">
+                            <i class="fa-solid fa-trash"></i>
                         </a>
                     </td>
                     </tr>
@@ -42,7 +45,7 @@
         </table>
         }
          else{
-              <h5 class=" d-flex justify-content-center card-title">Veri Bulunamadı</h5>
+              <h5 class=" d-flex justify-content-center card-title"></h5>
             }
     </div>
 </div>
