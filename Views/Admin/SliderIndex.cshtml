@@ -22,6 +22,7 @@
                     <th>Başlık</th>
                     <th>İçerik</th>
                     <th>Oluşturulma Tarihi</th>
+                    <th> Güncellenme Tarihi </th>
                     <th class="text-end">Güncelle</th>
                 </tr>
             </thead>
@@ -32,9 +33,13 @@
                         <td> @entity.ContentHeader </td>
                         <td> @entity.ContentText </td>
                         <td> @entity.CreatedDate </td>
+                        <td>@entity.UpdatedDate</td>
                           <td class="text-end">
                         <a href="@Url.ActionLink("SliderEdit", "Admin", new { id = entity.Id })" class="btn btn-warning">
                             <i class="fa-solid fa-pen"></i>
+                        </a>
+                        <a href="@Url.ActionLink("SliderDelete", "Admin", new { id = entity.Id })" class="btn btn-danger">
+                            <i class="fa-solid fa-trash"></i>
                         </a>
                     </td>
                     </tr>
