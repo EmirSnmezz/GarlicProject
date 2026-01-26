@@ -24,9 +24,10 @@ builder.Services.AddScoped<IProductDal, ProductDal>();
 
 builder.Services.AddScoped<IProductService, ProductService>();
 
+builder.Services.AddScoped<IProductCategoryDal, ProductCategoryModelDal>();
+
 builder.Services.AddScoped<IProductCategoryModelService, ProductCategoryService>();
 
-builder.Services.AddScoped<IProductCategoryDal, ProductCategoryModelDal>();
 
 
 var app = builder.Build();
