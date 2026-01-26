@@ -32,7 +32,7 @@ public class SliderService : ISliderService
 
         if(result is not null)
         {
-            return new SuccessDataResult<SliderModel>("", result);
+            return new SuccessDataResult<SliderModel>(data: result);
         }
 
         return new SuccessDataResult<SliderModel>("Görüntülenecek veri bulunamadı.");
@@ -47,6 +47,7 @@ public class SliderService : ISliderService
 
     public IResult Update(SliderModel slider)
     {
+        _sliderDal.Update(slider);
         return new SuccessResult("Slider başarıyla güncellendi");
     }
 }
