@@ -1,4 +1,4 @@
-public class ProductCategoryModel : Model, IProductCategory
+public class ProductCategoryModel : Model
 {
     public string Name { get; set; }
 }
