@@ -28,6 +28,9 @@ builder.Services.AddScoped<IProductCategoryDal, ProductCategoryModelDal>();
 
 builder.Services.AddScoped<IProductCategoryModelService, ProductCategoryService>();
 
+builder.Services.AddScoped<IImageDal, ImageDal>();
+
+builder.Services.AddScoped<IImageService, ImageService>();
 
 
 var app = builder.Build();
