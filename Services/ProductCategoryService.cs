@@ -16,13 +16,25 @@ public class ProductCategoryService : IProductCategoryModelService
         return new SuccessResult("Kategori başarıyla eklendi");
     }
 
-    public IDataResult<List<ProductCategoryModel>> GetAll()
+    public IDataResult<List<ProductCategoryModel>> GetAll(Expression<Func<ProductCategoryModel, bool>> filter = null)
     {
-        var result = _productCategoryDal.GetAll().ToList();
-
-        if(result is not null)
+        if(filter is null)
         {
-            return new SuccessDataResult<List<ProductCategoryModel>>(data: result);
+             var result = _productCategoryDal.GetAll().ToList();
+
+            if(result is not null)
+            {
+                return new SuccessDataResult<List<ProductCategoryModel>>(data: result);
+            }   
+        }
+        else
+        {
+            var result = _productCategoryDal.GetAll(filter).ToList();
+
+            if(result is not null)
+            {
+                return new SuccessDataResult<List<ProductCategoryModel>>(data: result);
+            }
         }
 
         return new ErrorDataResult<List<ProductCategoryModel>>("Görüntülenecek Kategori Bulunamadı.");
