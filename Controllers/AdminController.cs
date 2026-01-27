@@ -8,11 +8,13 @@ public class AdminController : Controller
     ISliderService _sliderService;
     IProductService _productService;
     IProductCategoryModelService _productCategoryModel;
-    public AdminController(ISliderService sliderService, IProductService productService, IProductCategoryModelService productCategoryModelService)
+    IImageService _imageService;
+    public AdminController(ISliderService sliderService, IProductService productService, IProductCategoryModelService productCategoryModelService,IImageService imageService)
     {
         _sliderService = sliderService;
         _productService = productService;
         _productCategoryModel = productCategoryModelService;
+        _imageService = imageService;
     }
 
     [Route("/Admin/")]
@@ -57,7 +59,7 @@ public class AdminController : Controller
     return RedirectToAction("Slider");
     }
 
-    [HttpDelete]
+    [HttpGet("SliderDelete")]
     public IActionResult SliderDelete(string id)
     {
         var entity = _sliderService.GetAll().Data.FirstOrDefault(x=> x.Id == id);
@@ -78,6 +80,15 @@ public class AdminController : Controller
     {
         var result = _productService.GetAll().Data;
 
+        List<ImageModel> images = new List<ImageModel>();
+
+        foreach(var product in result)
+        {
+            images = (_imageService.GetAll(x => x.ProductId == product.Id).Data);
+        }
+
+        ViewBag.Images = images;
+
         return View("ProductIndex", result);
     }
 
@@ -93,31 +104,34 @@ public class AdminController : Controller
     public IActionResult ProductAdd(ProductModel product, IFormFile imageFile)
     {
         var fileName = Guid.NewGuid() + Path.GetExtension(imageFile.FileName);
-    var path = Path.Combine("wwwroot/images", fileName);
+        var path = Path.Combine("wwwroot", fileName);
 
-    using var stream = new FileStream(path, FileMode.Create);
-    imageFile.CopyTo(stream);
+        using var stream = new FileStream(path, FileMode.Create);
+        imageFile.CopyTo(stream);
 
-    // 2️⃣ Image DB kaydı
-    var image = new ImageModel
-    {
-        ImageUrl = "/images/" + fileName,
-        DisplayPriority = 1,
-        SliderId = "32131"
-    };
+        var image = new ImageModel
+        {
+            ImageUrl = "/" + fileName,
+            DisplayPriority = 1,
+            ProductId = product.Id
+        };
+        var result = _imageService.Add(image);
 
-    //_context.SliderImages.Add(image);
+        if(result.IsSuccess)
+        {
          product.ImageId = image.Id;
-        _productService.Add(product);
+        _productService.Add(product);   
+        
+        return RedirectToAction("Products");
+        }
 
-        return RedirectToAction("ProductIndex");
+        return BadRequest();
     }
 
     [HttpGet("Categories")]
     public IActionResult Categories()
     {
         var result = _productCategoryModel.GetAll().Data;
-        System.Console.WriteLine( $"Data: {result.FirstOrDefault()}" );
         return View("Categories", result);
     }
 
@@ -131,6 +145,43 @@ public class AdminController : Controller
     public IActionResult AddCategory(ProductCategoryModel category)
     {
         _productCategoryModel.Add(category);
+        return RedirectToAction("Categories");
+    }
+
+     [HttpGet("DeleteCategory")]
+    public IActionResult DeleteCategory(string id)
+    {
+        var result = _productCategoryModel.GetAll(x => x.Id == id).Data.FirstOrDefault(x => x.Id == id);
+        var deleteResult =_productCategoryModel.Remove(result);
+
+        if(deleteResult.IsSuccess)
+        {
+            return RedirectToAction("Categories");
+        }
+
+        return BadRequest();
+    }
+
+   [HttpGet("EditCategory")]
+    public IActionResult EditCategory(string id)
+    {
+        var result = _productCategoryModel.GetAll().Data.FirstOrDefault(x => x.Id == id);
+        return View("EditCategory", result);
+    }
+
+    [HttpPost("EditCategory")]
+    public IActionResult CategoryEdit(ProductCategoryModel category)
+    {
+        var result = _productCategoryModel.GetAll().Data.FirstOrDefault();
+
+        if(result is not null)
+        {
+             result.Name = category.Name;
+            _productCategoryModel.Update(result);
+
+            return RedirectToAction("Categories");
+        }
+
         return RedirectToAction("Categories");
     }
 
