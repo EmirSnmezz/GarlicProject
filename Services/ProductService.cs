@@ -16,14 +16,15 @@ public class ProductService : IProductService
 
     public IDataResult<List<ProductModel>> GetAll()
     {
-        var result = _productDal.GetAll(null, x=> x.Category).ToList();
+        var result = _productDal.GetAll(null, x=> x.Category);
 
         if(result is not null)
         {
-            return new SuccessDataResult<List<ProductModel>>("Ürünler başarıyla getirildi.", result);
+
+            return new SuccessDataResult<List<ProductModel>>(result);
         }
 
-        return new ErrorDataResult<List<ProductModel>>("Görüntülenecek ürün bulunamadı");
+        return new ErrorDataResult<List<ProductModel>>("Görüntülenecek ürün bulunamadı", null);
     }
 
     public IDataResult<ProductModel> GetById(Expression<Func<ProductModel, bool>> filter)
