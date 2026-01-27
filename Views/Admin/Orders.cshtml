@@ -1,0 +1,44 @@
+
+
+@{
+    Layout = "_adminLayout";
+}
+
+<h2>Siparişler</h2>
+
+<table class="table table-striped mb-0 align-middle">
+    <thead class="table">
+        <tr>
+            <th>#</th>
+            <th>Sipariş No</th>
+            <th>Müşteri</th>
+            <th>Tarih</th>
+            <th>Toplam</th>
+            <th>Durum</th>
+            <th style="width:180px;">İşlemler</th>
+        </tr>
+    </thead>
+    <tbody>
+        @* @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.OrderNumber</td>
+                <td>@item.CustomerName</td>
+                <td>@item.OrderDate.ToString("dd.MM.yyyy")</td>
+                <td>@item.TotalPrice ₺</td>
+                <td>
+                    <span class="badge bg-info">@item.Status</span>
+                </td>
+                <td>
+                    <a href="/Admin/OrderDetail/@item.Id" class="btn btn-sm btn-primary">
+                        Detay
+                    </a>
+                    <a href="/Admin/OrderStatus/@item.Id" class="btn btn-sm btn-warning">
+                        Durum
+                    </a>
+                </td>
+            </tr>
+        }*@
+    </tbody>
+</table>
