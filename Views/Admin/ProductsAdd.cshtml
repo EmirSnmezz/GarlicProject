@@ -1,4 +1,9 @@
 @model ProductModel
+
+@{
+    Layout = "_adminLayout";
+}
+
 @using (Html.BeginForm("AddProduct", "Admin", FormMethod.Post,
     new { enctype = "multipart/form-data" }))
 {
