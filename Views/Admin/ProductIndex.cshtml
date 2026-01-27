@@ -1,51 +1,103 @@
 @{
     Layout = "_adminLayout.cshtml";
-    IQueryable<ProductModel> result = Model;
+    var result = Model;
+    List<ImageModel> images = ViewBag.Images;
 }
 
+<style>
+    /* Card tasarımı ve hover efekti */
+    .product-card {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 10px 15px;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        transition: transform 0.2s, box-shadow 0.2s;
+        background-color: #fff;
+    }
 
-<div class="d-flex justify-content-between align-items-center mb-3">
+    .product-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    .product-img {
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+        border-radius: 10px;
+        border: 1px solid #e0e0e0;
+        transition: transform 0.3s ease;
+        cursor: pointer;
+    }
+
+    .product-img:hover {
+        transform: scale(1.2);
+    }
+
+    .product-details {
+        flex: 1;
+    }
+
+    .product-actions a {
+        margin-left: 5px;
+    }
+
+    .no-products {
+        padding: 40px 0;
+        text-align: center;
+        color: #888;
+    }
+</style>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
     <h4>Ürün Yönetimi</h4>
     <a href="AddProduct" class="btn btn-sm btn-primary">
         <i class="fa-solid fa-plus"></i> Ürün Ekle
     </a>
 </div>
 
-<div class="card shadow-sm">
-    <div class="card-body p-0">
-         @if(result is not null){
-        <table class="table table-striped mb-0 align-middle">
-            <thead class="table-light">
-                <tr>
-                    <th>Başlık</th>
-                    <th>İçerik</th>
-                    <th>Oluşturulma Tarihi</th>
-                    <th class="text-end">Güncelle</th>
-                </tr>
-            </thead>
-            <tbody>
-                     @foreach(var entity in result)
-                {
-                    <tr>
-                        <td> @entity.ProductTitle </td>
-                        <td> @entity.ProductTitle </td>
-                        <td> @entity.CreatedDate </td>
-                          <td class="text-end">
-                        <a href="@Url.ActionLink("ProductEdit", "Admin", new { id = entity.Id })" class="btn btn-warning">
-                        <i class="fa-solid fa-pen"></i>
+@if (result != null)
+{
+    <div class="row g-3">
+        @foreach (var entity in result)
+        {
+            var image = images.FirstOrDefault(x => x.ProductId == entity.Id);
+            <div class="col-md-6 col-lg-4">
+                <div class="product-card">
+                    @if (image != null)
+                    {
+                        <img src="@image.ImageUrl.Replace("/wwwroot", "")" 
+                             class="product-img" 
+                             alt="@entity.ProductTitle" />
+                    }
+                    else
+                    {
+                        <div class="product-img d-flex align-items-center justify-content-center text-muted" style="font-size:12px;">Resim yok</div>
+                    }
+
+                    <div class="product-details">
+                        <h6 class="mb-1">@entity.ProductTitle</h6>
+                        <small class="text-muted">Oluşturulma: @entity.CreatedDate.ToString("dd.MM.yyyy")</small>
+                    </div>
+
+                    <div class="product-actions ms-auto">
+                        <a href="@Url.ActionLink("ProductEdit", "Admin", new { id = entity.Id })" class="btn btn-warning btn-sm">
+                            <i class="fa-solid fa-pen"></i>
                         </a>
-                        <a href="@Url.ActionLink("ProductDelete", "Admin", new { id = entity.Id })" class="btn btn-danger">
+                        <a href="@Url.ActionLink("ProductDelete", "Admin", new { id = entity.Id })" class="btn btn-danger btn-sm">
                             <i class="fa-solid fa-trash"></i>
                         </a>
-                    </td>
-                    </tr>
-                }   
-               
-            </tbody>
-        </table>
+                    </div>
+                </div>
+            </div>
         }
-         else{
-              <h5 class=" d-flex justify-content-center card-title"></h5>
-            }
     </div>
-</div>
+}
+else
+{
+    <div class="no-products">
+        <h5>Henüz ürün eklenmemiş.</h5>
+    </div>
+}
