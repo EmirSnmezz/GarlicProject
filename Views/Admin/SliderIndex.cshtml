@@ -27,23 +27,29 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach(SliderModel entity in result)
+                @if(Model is not null)
                 {
-                    <tr>
-                        <td> @entity.ContentHeader </td>
-                        <td> @entity.ContentText </td>
-                        <td> @entity.CreatedDate </td>
-                        <td>@entity.UpdatedDate</td>
-                          <td class="text-end">
-                        <a href="@Url.ActionLink("SliderEdit", "Admin", new { id = entity.Id })" class="btn btn-warning">
-                            <i class="fa-solid fa-pen"></i>
-                        </a>
-                        <a href="@Url.ActionLink("SliderDelete", "Admin", new { id = entity.Id })" class="btn btn-danger">
-                            <i class="fa-solid fa-trash"></i>
-                        </a>
-                    </td>
-                    </tr>
+                         @foreach(SliderModel entity in result)
+                    {
+                        <tr>
+                            <td> @entity.ContentHeader </td>
+                            <td> @entity.ContentText </td>
+                            <td> @entity.CreatedDate </td>
+                            <td>@entity.UpdatedDate</td>
+                              <td class="text-end">
+                            <a href="@Url.ActionLink("SliderEdit", "Admin", new { id = entity.Id })" class="btn btn-warning">
+                                <i class="fa-solid fa-pen"></i>
+                            </a>
+                            <a href="@Url.ActionLink("SliderDelete", "Admin", new { id = entity.Id })" class="btn btn-danger">
+                                <i class="fa-solid fa-trash"></i>
+                            </a>
+                        </td>
+                        </tr>
+                    }
                 }
+            else{
+              <h5 class=" d-flex justify-content-center card-title">Veri Bulunamadı</h5>
+            }
             </tbody>
         </table>
     </div>
