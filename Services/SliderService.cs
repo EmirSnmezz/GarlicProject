@@ -16,7 +16,7 @@ public class SliderService : ISliderService
 
     public IDataResult<List<SliderModel>> GetAll()
     {
-        var result = _sliderDal.GetAll().ToList();
+        var result = _sliderDal.GetAll();
 
         if(result is not null)
         {
