@@ -20,7 +20,7 @@ public class AdminController : Controller
     [Route("/Admin/")]
     public IActionResult Index()
     {
-        return View();
+        return RedirectToAction("Slider");
     }
 
     [HttpGet("Slider")]
@@ -84,7 +84,7 @@ public class AdminController : Controller
 
         foreach(var product in result)
         {
-            images = (_imageService.GetAll(x => x.ProductId == product.Id).Data);
+            images = _imageService.GetAll(x => x.ProductId == product.Id).Data;
         }
 
         ViewBag.Images = images;
@@ -109,6 +109,8 @@ public class AdminController : Controller
         using var stream = new FileStream(path, FileMode.Create);
         imageFile.CopyTo(stream);
 
+        product.Id = Guid.NewGuid().ToString();
+
         var image = new ImageModel
         {
             ImageUrl = "/" + fileName,
@@ -126,6 +128,55 @@ public class AdminController : Controller
         }
 
         return BadRequest();
+    }
+
+    [HttpGet("UpdateProduct")]
+    public IActionResult UpdateProduct(string id)
+    {
+        var result = _productService.GetById(x => x.Id == id).Data;
+
+        var categories = _productCategoryModel.GetAll().Data.ToList();
+        ViewBag.Categories = categories;
+
+        if(result is not null)
+        {
+            return View("UpdateProduct",result);
+        }
+
+        return NotFound();
+    }
+
+     [HttpPost("UpdateProduct")]
+    public IActionResult UpdateProduct(ProductModel product)
+    {
+        var result = _productService.GetAll(x => x.Id == product.Id).Data.FirstOrDefault();   
+
+        if (result is not null)
+        {
+            result.ProductDescription = product.ProductDescription;
+            result.ProductTitle = product.ProductTitle;
+
+            _productService.Update(result);
+
+            return RedirectToAction("Products");
+        }
+        
+        return NotFound();
+    }
+
+    [HttpGet("ProductDelete")]
+    public IActionResult ProductDelete(string id)
+    {
+        var result = _productService.GetAll(x => x.Id == id).Data.FirstOrDefault();
+
+        if(result is not null)
+        {
+            _productService.Remove(result);
+
+            return RedirectToAction("Products");
+        }
+
+        return NotFound();
     }
 
     [HttpGet("Categories")]
@@ -165,14 +216,14 @@ public class AdminController : Controller
    [HttpGet("EditCategory")]
     public IActionResult EditCategory(string id)
     {
-        var result = _productCategoryModel.GetAll().Data.FirstOrDefault(x => x.Id == id);
+        var result = _productCategoryModel.GetAll(x => x.Id == id).Data.FirstOrDefault();
         return View("EditCategory", result);
     }
 
     [HttpPost("EditCategory")]
     public IActionResult CategoryEdit(ProductCategoryModel category)
     {
-        var result = _productCategoryModel.GetAll().Data.FirstOrDefault();
+        var result = _productCategoryModel.GetAll(x => x.Id == category.Id).Data.FirstOrDefault();
 
         if(result is not null)
         {

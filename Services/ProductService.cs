@@ -14,9 +14,9 @@ public class ProductService : IProductService
         return new SuccessResult("Ürün başarıyla oluşturuldu");
     }
 
-    public IDataResult<List<ProductModel>> GetAll()
+    public IDataResult<List<ProductModel>> GetAll(Expression<Func<ProductModel, bool>> filter = null)
     {
-        var result = _productDal.GetAll(null, x=> x.Category);
+        var result = _productDal.GetAll(filter, x=> x.Category);
 
         if(result is not null)
         {
@@ -29,11 +29,10 @@ public class ProductService : IProductService
 
     public IDataResult<ProductModel> GetById(Expression<Func<ProductModel, bool>> filter)
     {
-        var result = _productDal.Get(filter);
-
+        var result = _productDal.GetAll(filter).FirstOrDefault();
         if(result is not null)
         {
-            return new SuccessDataResult<ProductModel>("Ürünler başarıyla getirildi.", result);
+            return new SuccessDataResult<ProductModel>(result);
         }
 
         return new ErrorDataResult<ProductModel>("Görüntülenecek ürün bulunamadı");
