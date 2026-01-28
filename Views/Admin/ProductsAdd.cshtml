@@ -3,6 +3,7 @@
 @{
     Layout = "_adminLayout";
 }
+<h2>Ürün Ekle</h2>
 
 @using (Html.BeginForm("AddProduct", "Admin", FormMethod.Post,
     new { enctype = "multipart/form-data" }))
@@ -10,17 +11,17 @@
     @Html.HiddenFor(x => x.Id)
 
     <div class="mb-3">
-        @Html.LabelFor(x => x.ProductTitle)
+        @Html.LabelFor(x => x.ProductTitle, "Ürün Başlığı")
         @Html.TextBoxFor(x => x.ProductTitle, new { @class = "form-control" })
     </div>
 
     <div class="mb-3">
-        @Html.LabelFor(x => x.ProductDescription)
+        @Html.LabelFor(x => x.ProductDescription, "Ürün Açıklaması")
         @Html.TextBoxFor(x => x.ProductDescription, new { @class = "form-control" })
     </div>
 
     <div class="mb-3">
-        @Html.LabelFor(x => x.CategoryId)
+        @Html.LabelFor(x => x.CategoryId, "Kategori Seçimi")
         @Html.DropDownListFor(
             x => x.CategoryId,
             new SelectList(ViewBag.Categories, "Id", "Name"),
@@ -35,4 +36,5 @@
     </div>
 
     <button type="submit" class="btn btn-success">Kaydet</button>
+    <a href="/Admin/Products" class="btn btn-secondary">İptal</a>
 }
