@@ -1,6 +1,7 @@
+@model List<ProductModel>
 @{
     Layout = "_adminLayout.cshtml";
-    var result = Model;
+    List<ProductModel?> result = Model;
     List<ImageModel> images = ViewBag.Images;
 }
 
@@ -79,11 +80,12 @@
 
                     <div class="product-details">
                         <h6 class="mb-1">@entity.ProductTitle</h6>
-                        <small class="text-muted">Oluşturulma: @entity.CreatedDate.ToString("dd.MM.yyyy")</small>
+                        <small class="text-muted">Açıklama: @entity.ProductDescription</small> <br />
+                        <small class="text-muted">Oluşturulma: @entity.CreatedDate</small>
                     </div>
 
                     <div class="product-actions ms-auto">
-                        <a href="@Url.ActionLink("ProductEdit", "Admin", new { id = entity.Id })" class="btn btn-warning btn-sm">
+                        <a href="@Url.ActionLink("UpdateProduct", "Admin", new { id = entity.Id })" class="btn btn-warning btn-sm">
                             <i class="fa-solid fa-pen"></i>
                         </a>
                         <a href="@Url.ActionLink("ProductDelete", "Admin", new { id = entity.Id })" class="btn btn-danger btn-sm">
