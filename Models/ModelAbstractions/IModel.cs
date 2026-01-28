@@ -1,6 +1,6 @@
 public interface IModel
 {
-    public string? Id {get;}
+    public string? Id {get; set;}
 
     public DateTime? CreatedDate {get; set;}
 

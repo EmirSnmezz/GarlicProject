@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
-public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity: class, new()
+public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity: class, IModel
 {
     public AppDbContext _context;
     public GenericRepository(AppDbContext context)
@@ -13,6 +13,11 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEnt
 
     public void Add(TEntity entity)
     {
+        if(string.IsNullOrEmpty(entity.Id))
+        {
+            entity.Id = Guid.NewGuid().ToString();
+        }
+
         EntityEntry addedEntity = _context.Set<TEntity>().Entry(entity);
         EntityState state = EntityState.Added;
         addedEntity.State = state;
