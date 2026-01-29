@@ -2,51 +2,72 @@
 
 @{
     Layout = "_adminLayout.cshtml";
-
-    List<ProductCategoryModel> result = Model;
+    var result = Model ?? new List<ProductCategoryModel>();
 }
 
-
 <div class="d-flex justify-content-between align-items-center mb-3">
-    <h4>Kategori Yönetimi</h4>
-    <a href="AddCategory" class="btn btn-sm btn-primary">
-        <i class="fa-solid fa-plus"></i> Kategori Ekle
+    <h4 class="fw-semibold">Kategori Yönetimi</h4>
+    <a href="AddCategory" class="btn btn-primary btn-sm d-flex align-items-center">
+        <i class="fa-solid fa-plus me-1"></i> Kategori Ekle
     </a>
 </div>
 
-<div class="card shadow-sm">
+<div class="card shadow-sm border-0">
     <div class="card-body p-0">
-         @if(Model is not null){
-        <table class="table table-striped mb-0 align-middle">
-            <thead class="table-light">
-                <tr>
-                    <th>Kategori Adı</th>
-                    <th>Oluşturulma Tarihi</th>
-                    <th class="text-end">Güncelle</th>
-                </tr>
-            </thead>
-            <tbody>
-                     @foreach(ProductCategoryModel entity in result)
-                {
+        @if (result.Any())
+        {
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light text-uppercase small">
                     <tr>
-                        <td> @entity.Name </td>
-                        <td> @entity.CreatedDate </td>
-                          <td class="text-end">
-                        <a href="@Url.ActionLink("EditCategory", "Admin", new { id = entity.Id })" class="btn btn-warning">
-                            <i class="fa-solid fa-pen"></i>
-                        </a>
-                        <a href="@Url.ActionLink("DeleteCategory", "Admin", new { id = entity.Id })" class="btn btn-danger">
-                            <i class="fa-solid fa-trash"></i>
-                        </a>
-                        </td>
+                        <th>Kategori Adı</th>
+                        <th>Oluşturulma Tarihi</th>
+                        <th class="text-end">İşlemler</th>
                     </tr>
-                }   
-               
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach (var entity in result)
+                    {
+                        <tr>
+                            <td class="fw-semibold">@entity.Name</td>
+                            <td class="text-muted">@entity.CreatedDate?.ToString("dd.MM.yyyy")</td>
+                            <td class="text-end">
+                                <a href="@Url.ActionLink("EditCategory", "Admin", new { id = entity.Id })" class="btn btn-outline-warning btn-sm me-1" title="Düzenle">
+                                    <i class="fa-solid fa-pen"></i>
+                                </a>
+                                <a href="@Url.ActionLink("DeleteCategory", "Admin", new { id = entity.Id })" class="btn btn-outline-danger btn-sm me-1" title="Sil" onclick="return confirm('Silmek istediğinize emin misiniz?')">
+                                    <i class="fa-solid fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
         }
-         else{
-              <h5 class=" d-flex justify-content-center card-title">Veri Bulunamadı</h5>
-            }
+        else
+        {
+            <div class="d-flex justify-content-center py-5 text-muted">
+                <i class="fa-regular fa-folder-open fa-2x me-2"></i>
+                <h5 class="mb-0 align-self-center">Henüz kategori bulunamadı</h5>
+            </div>
+        }
     </div>
 </div>
+
+<style>
+    /* Table hover efekti */
+    .table-hover tbody tr:hover {
+        background-color: #f8f9fa;
+        transition: background-color 0.2s;
+    }
+
+    /* Button hover efektleri */
+    .btn-warning:hover {
+        background-color: #e0a800;
+        border-color: #d39e00;
+    }
+
+    .btn-danger:hover {
+        background-color: #c82333;
+        border-color: #bd2130;
+    }
+</style>
