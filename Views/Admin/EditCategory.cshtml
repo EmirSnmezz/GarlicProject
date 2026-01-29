@@ -4,17 +4,42 @@
     Layout = "_adminLayout";
 }
 
-<h2>Kategori Güncelle</h2>
+<h2 class="mb-4">Kategori Güncelle</h2>
 
 @using (Html.BeginForm("CategoryEdit", "Admin", FormMethod.Post))
 {
     @Html.HiddenFor(x => x.Id)
 
     <div class="mb-3">
-        @Html.LabelFor(x => x.Name, "Kategori Adı", new { @class = "form-label" })
-        @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+        @Html.LabelFor(x => x.Name, "Kategori Adı", new { @class = "form-label fw-semibold" })
+        @Html.TextBoxFor(x => x.Name, new { @class = "form-control", placeholder = "Kategori adını girin" })
     </div>
 
-    <button type="submit" class="btn btn-success">Güncelle</button>
-    <a href="/Admin/Categories" class="btn btn-secondary">İptal</a>
+    <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-success d-flex align-items-center">
+            <i class="fa-solid fa-pen me-1"></i> Güncelle
+        </button>
+        <a href="/Admin/Categories" class="btn btn-secondary d-flex align-items-center">
+            <i class="fa-solid fa-xmark me-1"></i> İptal
+        </a>
+    </div>
 }
+
+<style>
+    /* Input focus efekti */
+    .form-control:focus {
+        box-shadow: 0 0 0 0.2rem rgba(25, 135, 84, 0.25);
+        border-color: #198754;
+    }
+
+    /* Button hover efektleri */
+    .btn-success:hover {
+        background-color: #157347;
+        border-color: #146c43;
+    }
+
+    .btn-secondary:hover {
+        background-color: #6c757d;
+        border-color: #5c636a;
+    }
+</style>
