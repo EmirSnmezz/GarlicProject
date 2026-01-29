@@ -27,6 +27,8 @@ public class AdminController : Controller
     public IActionResult Slider()
     {
         var result = _sliderService.GetAll();
+        var imageResult = _imageService.GetAll(x => x.SliderId != null).Data;
+        ViewBag.ImageResult = imageResult;
         return View("SliderIndex", result.Data);
     }
     
@@ -34,6 +36,9 @@ public class AdminController : Controller
     public IActionResult SliderEdit(string id)
     {
         var result = _sliderService.GetAll().Data.FirstOrDefault(x => x.Id == id);
+
+        var image = _imageService.GetAll(x => x.SliderId == id).Data.FirstOrDefault(x => x.SliderId == id);
+        ViewBag.SliderImage = image;
         return View("SliderEdit", result);
     }
 
@@ -47,7 +52,6 @@ public class AdminController : Controller
     public IActionResult UpdateSlider(SliderModel sliderModel)
     {
         var entity = _sliderService.GetAll().Data.FirstOrDefault();
-
     if (entity == null)
         return NotFound();
 
@@ -69,9 +73,26 @@ public class AdminController : Controller
     }
 
     [HttpPost("AddSlider")]
-    public IActionResult SliderAdd(SliderModel sliderModel)
+    public IActionResult SliderAdd(SliderModel sliderModel, IFormFile imageFile)
     {
+        var sliderId = Guid.NewGuid().ToString();
+        sliderModel.Id = sliderId;
+
         _sliderService.Add(sliderModel);
+
+         string fileName = Guid.NewGuid().ToString() + Path.GetExtension(imageFile.FileName);
+         var path = Path.Combine("wwwroot", fileName);
+         using var stream = new FileStream(path, FileMode.Create);
+         imageFile.CopyTo(stream);
+
+         var image = new ImageModel
+         {
+             ImageUrl = "/" + fileName,
+            SliderId = sliderId,
+         };
+
+         _imageService.Add(image);
+        
         return RedirectToAction("Slider");
     }
 
@@ -88,6 +109,7 @@ public class AdminController : Controller
         }
 
         ViewBag.Images = images;
+
 
         return View("ProductIndex", result);
     }
@@ -134,7 +156,6 @@ public class AdminController : Controller
     public IActionResult UpdateProduct(string id)
     {
         var result = _productService.GetById(x => x.Id == id).Data;
-
         var categories = _productCategoryModel.GetAll().Data.ToList();
         ViewBag.Categories = categories;
 
