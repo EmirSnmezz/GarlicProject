@@ -3,25 +3,25 @@
 @{
     Layout = "_adminLayout";
 }
-<h2>Ürün Ekle</h2>
 
-@using (Html.BeginForm("AddProduct", "Admin", FormMethod.Post,
-    new { enctype = "multipart/form-data" }))
+<h2 class="mb-4">Ürün Ekle</h2>
+
+@using (Html.BeginForm("AddProduct", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.HiddenFor(x => x.Id)
 
     <div class="mb-3">
-        @Html.LabelFor(x => x.ProductTitle, "Ürün Başlığı")
-        @Html.TextBoxFor(x => x.ProductTitle, new { @class = "form-control" })
+        @Html.LabelFor(x => x.ProductTitle, "Ürün Başlığı", new { @class = "form-label fw-semibold" })
+        @Html.TextBoxFor(x => x.ProductTitle, new { @class = "form-control", placeholder = "Ürün başlığını girin" })
     </div>
 
     <div class="mb-3">
-        @Html.LabelFor(x => x.ProductDescription, "Ürün Açıklaması")
-        @Html.TextBoxFor(x => x.ProductDescription, new { @class = "form-control" })
+        @Html.LabelFor(x => x.ProductDescription, "Ürün Açıklaması", new { @class = "form-label fw-semibold" })
+        @Html.TextAreaFor(x => x.ProductDescription, 4, 50, new { @class = "form-control", placeholder = "Ürün açıklamasını girin" })
     </div>
 
     <div class="mb-3">
-        @Html.LabelFor(x => x.CategoryId, "Kategori Seçimi")
+        @Html.LabelFor(x => x.CategoryId, "Kategori Seçimi", new { @class = "form-label fw-semibold" })
         @Html.DropDownListFor(
             x => x.CategoryId,
             new SelectList(ViewBag.Categories, "Id", "Name"),
@@ -31,10 +31,37 @@
     </div>
 
     <div class="mb-3">
-        <label>Ürün Fotoğrafı</label>
-        <input type="file" name="imageFile" class="form-control" />
+        <label class="form-label fw-semibold">Ürün Fotoğrafı</label>
+        <input type="file" name="imageFile" class="form-control" accept="image/*" />
+        <small class="text-muted">JPG, PNG formatında yükleyebilirsiniz. Maks 2MB.</small>
     </div>
 
-    <button type="submit" class="btn btn-success">Kaydet</button>
-    <a href="/Admin/Products" class="btn btn-secondary">İptal</a>
+    <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-success d-flex align-items-center">
+            <i class="fa-solid fa-floppy-disk me-1"></i> Kaydet
+        </button>
+        <a href="/Admin/Products" class="btn btn-secondary d-flex align-items-center">
+            <i class="fa-solid fa-xmark me-1"></i> İptal
+        </a>
+    </div>
 }
+
+<style>
+    /* Modern focus efekti */
+    .form-control:focus, .form-select:focus {
+        box-shadow: 0 0 0 0.2rem rgba(25, 135, 84, 0.25);
+        border-color: #198754;
+    }
+
+    /* File input hover efekti */
+    input[type="file"]:hover {
+        cursor: pointer;
+        border-color: #198754;
+    }
+
+    /* Button hover */
+    .btn-success:hover {
+        background-color: #157347;
+        border-color: #146c43;
+    }
+</style>
