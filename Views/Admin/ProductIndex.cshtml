@@ -2,7 +2,7 @@
 @{
     Layout = "_adminLayout.cshtml";
     List<ProductModel?> result = Model;
-    List<ImageModel> images = ViewBag.Images;
+    List<ImageModel> images = ViewBag.Images ?? new List<ImageModel>();
 }
 
 <style>
@@ -11,16 +11,16 @@
         display: flex;
         align-items: center;
         gap: 15px;
-        padding: 10px 15px;
-        border-radius: 10px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        transition: transform 0.2s, box-shadow 0.2s;
+        padding: 12px 18px;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        transition: transform 0.3s, box-shadow 0.3s;
         background-color: #fff;
     }
 
     .product-card:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        transform: translateY(-5px);
+        box-shadow: 0 6px 20px rgba(0,0,0,0.12);
     }
 
     .product-img {
@@ -29,37 +29,57 @@
         object-fit: cover;
         border-radius: 10px;
         border: 1px solid #e0e0e0;
-        transition: transform 0.3s ease;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
         cursor: pointer;
     }
 
     .product-img:hover {
         transform: scale(1.2);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
 
-    .product-details {
-        flex: 1;
+    .product-details h6 {
+        margin-bottom: 4px;
+        font-weight: 600;
+        font-size: 1rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .product-details small {
+        display: block;
+        color: #6c757d;
+        font-size: 0.85rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .product-actions a {
         margin-left: 5px;
+        transition: transform 0.2s;
+    }
+
+    .product-actions a:hover {
+        transform: scale(1.1);
     }
 
     .no-products {
-        padding: 40px 0;
+        padding: 60px 0;
         text-align: center;
         color: #888;
     }
 </style>
 
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h4>Ürün Yönetimi</h4>
-    <a href="AddProduct" class="btn btn-sm btn-primary">
-        <i class="fa-solid fa-plus"></i> Ürün Ekle
+    <h4 class="fw-semibold">Ürün Yönetimi</h4>
+    <a href="AddProduct" class="btn btn-primary btn-sm d-flex align-items-center">
+        <i class="fa-solid fa-plus me-1"></i> Ürün Ekle
     </a>
 </div>
 
-@if (result != null)
+@if (result != null && result.Any())
 {
     <div class="row g-3">
         @foreach (var entity in result)
@@ -78,17 +98,17 @@
                         <div class="product-img d-flex align-items-center justify-content-center text-muted" style="font-size:12px;">Resim yok</div>
                     }
 
-                    <div class="product-details">
-                        <h6 class="mb-1">@entity.ProductTitle</h6>
-                        <small class="text-muted">Açıklama: @entity.ProductDescription</small> <br />
-                        <small class="text-muted">Oluşturulma: @entity.CreatedDate</small>
+                    <div class="product-details flex-fill ms-2">
+                        <h6 title="@entity.ProductTitle">@entity.ProductTitle</h6>
+                        <small title="@entity.ProductDescription">Açıklama: @entity.ProductDescription</small>
+                        <small>Oluşturulma: @entity.CreatedDate?.ToString("dd.MM.yyyy")</small>
                     </div>
 
-                    <div class="product-actions ms-auto">
-                        <a href="@Url.ActionLink("UpdateProduct", "Admin", new { id = entity.Id })" class="btn btn-warning btn-sm">
+                    <div class="product-actions ms-auto d-flex align-items-center">
+                        <a href="@Url.ActionLink("UpdateProduct", "Admin", new { id = entity.Id })" class="btn btn-outline-warning btn-sm me-1" title="Düzenle">
                             <i class="fa-solid fa-pen"></i>
                         </a>
-                        <a href="@Url.ActionLink("ProductDelete", "Admin", new { id = entity.Id })" class="btn btn-danger btn-sm">
+                        <a href="@Url.ActionLink("ProductDelete", "Admin", new { id = entity.Id })" class="btn btn-outline-danger btn-sm me-1" title="Sil" onclick="return confirm('Silmek istediğinize emin misiniz?')">
                             <i class="fa-solid fa-trash"></i>
                         </a>
                     </div>
