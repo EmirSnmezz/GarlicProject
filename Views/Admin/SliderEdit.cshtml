@@ -1,25 +1,70 @@
+@using System.IO.Compression
 @model SliderModel
+<style>
+   .slider-image-box {
+    border: 1px dashed #ccc;
+    padding: 10px;
+    text-align: center;
+    background: #fafafa;
+}
+.slider-image-box img {
+    max-height: 180px;
+    object-fit: cover;
+}
+</style>
+    
 
 @{
     Layout = "_adminLayout";
+    ImageModel image = ViewBag.SliderImage;
 }
 
-<h2>Slider Güncelle</h2>
+<div class="container-fluid mt-4">
+    <div class="card shadow-sm">
+        <div class="card-header bg-dark text-white">
+            <h5 class="mb-0">Slider Güncelle</h5>
+        </div>
 
-@using (Html.BeginForm("UpdateSlider", "Admin", FormMethod.Post))
-{
-    @Html.HiddenFor(x => x.Id)
+        <div class="card-body">
+            @using (Html.BeginForm("UpdateSlider", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.HiddenFor(x => x.Id)
 
-    <div class="mb-3">
-        @Html.LabelFor(x => x.ContentHeader, "Slider Başlığı", new { @class = "form-label" })
-        @Html.TextBoxFor(x => x.ContentHeader, new { @class = "form-control" })
+                <div class="row">
+                    <!-- SOL TARAF -->
+                    <div class="col-md-8">
+                        <div class="mb-3">
+                            @Html.LabelFor(x => x.ContentHeader, "Slider Başlığı", new { @class = "form-label fw-bold" })
+                            @Html.TextBoxFor(x => x.ContentHeader, new { @class = "form-control", placeholder = "Başlık girin" })
+                        </div>
+
+                        <div class="mb-3">
+                            @Html.LabelFor(x => x.ContentText, "İçerik Metni", new { @class = "form-label fw-bold" })
+                            @Html.TextAreaFor(x => x.ContentText, 4, 0, new { @class = "form-control", placeholder = "Açıklama..." })
+                        </div>
+                    </div>
+
+                    <!-- SAĞ TARAF -->
+                    <div class="col-md-4">
+                        <label class="form-label fw-bold">Mevcut Görsel</label>
+
+                        <div class="slider-image-box mb-3">
+                            <img src="@image.ImageUrl.Replace("/wwwroot", "")"
+                                 class="img-fluid rounded shadow-sm" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Yeni Görsel Yükle</label>
+                            <input type="file" name="ImageFile" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-end gap-2 mt-3">
+                    <a href="/Admin/Slider" class="btn btn-outline-secondary">İptal</a>
+                    <button type="submit" class="btn btn-success px-4">Kaydet</button>
+                </div>
+            }
+        </div>
     </div>
-
-    <div class="mb-3">
-        @Html.LabelFor(x => x.ContentText, "İçerik Metni", new { @class = "form-label" })
-        @Html.TextBoxFor(x => x.ContentText, new { @class = "form-control" })
-    </div>
-
-    <button type="submit" class="btn btn-success">Güncelle</button>
-    <a href="/Admin/Slider" class="btn btn-secondary">İptal</a>
-}
+</div>
