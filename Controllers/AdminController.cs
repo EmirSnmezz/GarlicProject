@@ -51,7 +51,7 @@ public class AdminController : Controller
     [HttpPost("UpdateSlider")]
     public IActionResult UpdateSlider(SliderModel sliderModel)
     {
-        var entity = _sliderService.GetAll().Data.FirstOrDefault();
+        var entity = _sliderService.GetAll().Data.FirstOrDefault(x => x.Id == sliderModel.Id);
     if (entity == null)
         return NotFound();
 
@@ -170,7 +170,7 @@ public class AdminController : Controller
      [HttpPost("UpdateProduct")]
     public IActionResult UpdateProduct(ProductModel product)
     {
-        var result = _productService.GetAll(x => x.Id == product.Id).Data.FirstOrDefault();   
+        var result = _productService.GetAll(x => x.Id == product.Id).Data.FirstOrDefault(x => x.Id == product.Id);   
 
         if (result is not null)
         {
