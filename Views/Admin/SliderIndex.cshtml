@@ -1,55 +1,113 @@
 @using System.Collections
-
 @model List<SliderModel>
 
 @{
     Layout = "_adminLayout.cshtml";
-    List<SliderModel> result = Model;
+    var imageResult = ViewBag.ImageResult as List<ImageModel> ?? new List<ImageModel>();
 }
 
+<style>
+   .slider-thumb-wrapper {
+    width: 150px;      /* genişliği büyüttük */
+    height: 90px;      /* yüksekliği büyüttük, 16:9 oranı korunuyor */
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+/* Hover efekti */
+.slider-thumb-wrapper:hover {
+    transform: scale(1.08); /* biraz daha büyük hover efekti */
+    box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+}
+
+/* Görsel */
+.slider-thumb-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+    .text-truncate-custom {
+        max-width: 250px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+</style>
+
 <div class="d-flex justify-content-between align-items-center mb-3">
-    <h4>Slider Yönetimi</h4>
-    <a href="AddSlider" class="btn btn-sm btn-primary">
-        <i class="fa-solid fa-plus"></i> Sayfa Ekle
+    <h4 class="fw-semibold mb-0">Slider Yönetimi</h4>
+    <a href="/Admin/AddSlider" class="btn btn-primary btn-sm d-flex align-items-center">
+        <i class="fa-solid fa-plus me-1"></i> Yeni Slider
     </a>
 </div>
 
-<div class="card shadow-sm">
-    <div class="card-body p-0">
-        <table class="table table-striped mb-0 align-middle">
-            <thead class="table-light">
+<div class="card shadow-sm border-0">
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-light text-uppercase small">
                 <tr>
+                    <th style="width:100px;">Görsel</th>
                     <th>Başlık</th>
                     <th>İçerik</th>
-                    <th>Oluşturulma Tarihi</th>
-                    <th> Güncellenme Tarihi </th>
-                    <th class="text-end">Güncelle</th>
+                    <th>Tarih</th>
+                    <th class="text-end" style="width:140px;">İşlemler</th>
                 </tr>
             </thead>
             <tbody>
-                @if(Model is not null)
+                @if (Model != null && Model.Any())
                 {
-                         @foreach(SliderModel entity in result)
+                    foreach (var item in Model)
                     {
+                        var imgUrl = imageResult.FirstOrDefault(x => x.SliderId == item.Id)?.ImageUrl ?? "/images/default-slider.png";
                         <tr>
-                            <td> @entity.ContentHeader </td>
-                            <td> @entity.ContentText </td>
-                            <td> @entity.CreatedDate </td>
-                            <td>@entity.UpdatedDate</td>
-                              <td class="text-end">
-                            <a href="@Url.ActionLink("SliderEdit", "Admin", new { id = entity.Id })" class="btn btn-warning">
-                                <i class="fa-solid fa-pen"></i>
-                            </a>
-                            <a href="@Url.ActionLink("SliderDelete", "Admin", new { id = entity.Id })" class="btn btn-danger">
-                                <i class="fa-solid fa-trash"></i>
-                            </a>
-                        </td>
+                            <td>
+                                <div class="slider-thumb-wrapper">
+                                    <img src="@imgUrl" alt="Slider Görsel" />
+                                </div>
+                            </td>
+
+                            <td class="fw-semibold">@item.ContentHeader</td>
+
+                            <td class="text-muted text-truncate-custom" title="@item.ContentText">
+                                @item.ContentText
+                            </td>
+
+                            <td class="text-muted small">
+                                <div>Oluşturma: @item.CreatedDate?.ToString("dd.MM.yyyy")</div>
+                                <div>Güncelleme: @item.UpdatedDate?.ToString("dd.MM.yyyy")</div>
+                            </td>
+
+                            <td class="text-end">
+                                <a href="@Url.Action("SliderEdit","Admin",new { id = item.Id })" 
+                                   class="btn btn-outline-warning btn-sm me-1" 
+                                   title="Düzenle">
+                                    <i class="fa-solid fa-pen"></i>
+                                </a>
+                                <a href="@Url.Action("SliderDelete","Admin",new { id = item.Id })" 
+                                   class="btn btn-outline-danger btn-sm" 
+                                   onclick="return confirm('Silmek istediğinize emin misiniz?')" 
+                                   title="Sil">
+                                    <i class="fa-solid fa-trash"></i>
+                                </a>
+                            </td>
                         </tr>
                     }
                 }
-            else{
-              <h5 class=" d-flex justify-content-center card-title">Veri Bulunamadı</h5>
-            }
+                else
+                {
+                    <tr>
+                        <td colspan="5" class="text-center py-5 text-muted">
+                            <div class="d-flex flex-column align-items-center">
+                                <i class="fa-regular fa-image fa-3x mb-2"></i>
+                                <span>Henüz slider eklenmemiş</span>
+                            </div>
+                        </td>
+                    </tr>
+                }
             </tbody>
         </table>
     </div>
