@@ -4,26 +4,54 @@
     Layout = "_adminLayout";
 }
 
-<h2>Slider Ekle</h2>
+<h2 class="mb-4">Slider Ekle</h2>
 
-@using (Html.BeginForm("AddSlider", "Admin", FormMethod.Post))
+@using (Html.BeginForm("AddSlider", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.HiddenFor(x => x.Id)
 
     <div class="mb-3">
-        @Html.LabelFor(x => x.ContentHeader, "Slider Başlığı", new { @class = "form-label" })
-        @Html.TextBoxFor(x => x.ContentHeader, new { @class = "form-control" })
+        @Html.LabelFor(x => x.ContentHeader, "Slider Başlığı", new { @class = "form-label fw-semibold" })
+        @Html.TextBoxFor(x => x.ContentHeader, new { @class = "form-control", placeholder = "Slider başlığını girin" })
     </div>
 
     <div class="mb-3">
-        @Html.LabelFor(x => x.ContentText, "İçerik Metni", new { @class = "form-label" })
-        @Html.TextBoxFor(x => x.ContentText, new { @class = "form-control" })
+        @Html.LabelFor(x => x.ContentText, "İçerik Metni", new { @class = "form-label fw-semibold" })
+        @Html.TextAreaFor(x => x.ContentText, 3, 50, new { @class = "form-control", placeholder = "Slider içeriğini girin" })
     </div>
 
     <div class="mb-3">
-        
+        <label class="form-label fw-semibold">Slider Fotoğrafı</label>
+        <input type="file" name="imageFile" class="form-control" accept="image/*" />
+        <small class="text-muted">JPG veya PNG formatında yükleyebilirsiniz. Maks 2MB.</small>
     </div>
 
-    <button type="submit" class="btn btn-success">Ekle</button>
-    <a href="/Admin/Slider" class="btn btn-secondary">İptal</a>
+    <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-success d-flex align-items-center">
+            <i class="fa-solid fa-plus me-1"></i> Ekle
+        </button>
+        <a href="/Admin/Slider" class="btn btn-secondary d-flex align-items-center">
+            <i class="fa-solid fa-xmark me-1"></i> İptal
+        </a>
+    </div>
 }
+
+<style>
+    /* Input focus efekti */
+    .form-control:focus, .form-select:focus {
+        box-shadow: 0 0 0 0.2rem rgba(25, 135, 84, 0.25);
+        border-color: #198754;
+    }
+
+    /* File input hover */
+    input[type="file"]:hover {
+        cursor: pointer;
+        border-color: #198754;
+    }
+
+    /* Button hover */
+    .btn-success:hover {
+        background-color: #157347;
+        border-color: #146c43;
+    }
+</style>
