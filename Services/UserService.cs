@@ -1,3 +1,5 @@
+using System.Linq.Expressions;
+
 public class UserService : IUserService
 {
     IUserDal _userDal;
@@ -16,7 +18,8 @@ public class UserService : IUserService
 
     public IDataResult<User> GetUserByEmailOrUserName(string emailOrUsername)
     {
-        User result = _userDal.Get(user => user.Email == emailOrUsername || user.Username == emailOrUsername);
+        System.Console.WriteLine("USERRRRRRRRRR -> " + emailOrUsername);
+        User result = _userDal.GetAll().FirstOrDefault(x => x.Username == emailOrUsername);
 
         if(result is null)
         {
@@ -38,5 +41,29 @@ public class UserService : IUserService
         _userDal.Update(user);
 
         return new SuccessResult("Kullanıcı bilgileri başarıyla güncellendi");
+    }
+
+    public IDataResult<List<User>> GetAll(Expression<Func<User, bool>> filter = null)
+    {
+        if(filter is null)
+        {
+            var result = _userDal.GetAll(filter);
+
+            if(result is not null)
+            {
+               return new SuccessDataResult<List<User>>(data : result);
+            }   
+        }
+        else
+        {
+            var result = _userDal.GetAll();
+
+            if(result is not null)
+            {
+               return new SuccessDataResult<List<User>>(data : result);
+            }
+        }
+
+        return new ErrorDataResult<List<User>>(data:null);
     }
 }
