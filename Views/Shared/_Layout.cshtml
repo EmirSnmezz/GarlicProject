@@ -39,13 +39,34 @@
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
       }
 
-      .navbar-logo {
-        width: 50px;
-        height: 50px;
-        object-fit: contain;
-        opacity: 0.95;
-        transition: transform 0.3s ease, opacity 0.3s ease;
-      }
+   .navbar-logo {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  opacity: 0.95;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+@@media (max-width: 991px) {
+  .navbar-logo {
+    width: 55px;
+    height: 55px;
+  }
+}
+
+.footer-logo {
+  width: 150px;
+  height: auto;
+}
+
+@@media (max-width: 991px) {
+  .footer-logo {
+    width: 100px;
+  }
+}
+
+
+
 
       .navbar-logo:hover {
         opacity: 1;
@@ -299,7 +320,7 @@
 </head>
 <body class="d-flex flex-column min-vh-100">
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark shadow-lg">
+<nav class="navbar navbar-expand-lg navbar-dark shadow-lg">
     <div class="container-fluid px-4">
       <a class="navbar-brand d-flex align-items-center" href="@Url.Action("Index", "Home")">
         <img src="/sasa-icon.jpeg" alt="SASA Sarımsak Logo" class="navbar-logo" />
@@ -314,8 +335,8 @@
         <span class="navbar-toggler-icon"></span>
       </button>
 
-      <div class="collapse navbar-collapse justify-content-center" id="mainNavbar">
-        <ul class="navbar-nav gap-2">
+      <div class="collapse navbar-collapse" id="mainNavbar">
+        <ul class="navbar-nav mx-auto gap-2">
           <li class="nav-item">
             @Html.ActionLink("Anasayfa", "Index", "Home", null, new { @class = "nav-link-custom" })
           </li>
@@ -329,15 +350,41 @@
             @Html.ActionLink("İletişim", "Contact", "Home", null, new { @class = "nav-link-custom" })
           </li>
         </ul>
-        <span>@Html.ActionLink("", "Index", "Admin", null, new { @class = "fa fa-user"})</span>
+
+       <div class="d-flex align-items-center">
+          <a class="btn btn-outline-light btn-sm d-flex align-items-center gap-2 admin-btn" href="@Url.Action("Login", "Authentication")">
+            <i class="fa fa-user"></i>
+            Giriş Yap
+          </a>
+        </div>
       </div>
     </div>
-  </nav>
+</nav>
+
 
   <!-- Main Content -->
   <div class="container-fluid mt-3">
     @RenderBody()
   </div>
+
+@if (ViewContext.RouteData.Values["controller"].ToString() == "Home" && ViewContext.RouteData.Values["action"].ToString() != "Contact")
+{
+   <!-- CTA Section -->
+<section class="py-5 bg-primary bg-gradient text-white">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-8 text-center text-lg-start mb-4 mb-lg-0 animate-on-scroll" data-animation="slide-left" style="border-radius: 10%;">
+        <h2 class="display-5 fw-bold mb-3">Doğal ve Organik Sarımsak için Bize Ulaşın!</h2>
+        <p class="lead mb-0">Sağlıklı yaşamın kapılarını aralayın, doğanın tadını çıkarın.</p>
+      </div>
+      <div class="col-lg-4 text-center text-lg-end animate-on-scroll" data-animation="slide-right">
+        @Html.ActionLink("Bizimle İletişime Geçin", "Contact", "Home", null, new { @class = "btn btn-light btn-lg px-5 py-3 fw-semibold shadow" })
+      </div>
+    </div>
+  </div>
+</section>
+}
+
 
   <!-- Footer -->
   <footer class="bg-dark text-white pt-5 pb-3 mt-5">
@@ -345,7 +392,7 @@
       <div class="row">
         <!-- Şirket Bilgileri -->
         <div class="col-md-4 mb-4">
-          <img src="/sasa-icon.jpeg" class="mb-3" style="width: 100px;" alt="SASA Sarımsak Logo">
+          <img src="/sasa-icon.jpeg" class="footer-logo mb-3" alt="SASA Sarımsak Logo">
           <h5 class="fw-bold mb-3">SASA Sarımsak</h5>
           <p class="text-white-50 mb-3">
             Doğal ve organik sarımsak ürünleri ile sağlıklı yaşama katkı sağlıyoruz. 
@@ -424,13 +471,13 @@
       <hr class="border-secondary my-4">
 
       <!-- Copyright -->
-      <div class="row">
-        <div class="col-12 text-center">
-          <p class="text-white-50 mb-0 small">
-            © 2025 SASA Sarımsak. Tüm hakları saklıdır.
-          </p>
-        </div>
+<div class="row">
+      <div class="col-12 text-center">
+        <p class="text-white-50 mb-0 small">
+          © 2026 <a href="https://esriva.com.tr/" class="text-warning text-decoration-none">Esriva</a> Tarafından Geliştirilmiştir.
+        </p>
       </div>
+    </div>
     </div>
   </footer>
 
