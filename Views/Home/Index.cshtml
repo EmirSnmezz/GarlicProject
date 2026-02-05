@@ -1,5 +1,10 @@
+    @{
+      List<SliderModel> sliders = Model;
+      List<ImageModel> images = ViewBag.images;
+    }
+    
     <div class="container-fluid px-0 py-0">
-<div id="carouselExampleCaptions" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="5000">
+    <div id="carouselExampleCaptions" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="5000">
     <div class="carousel-indicators">
       <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
       <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -21,41 +26,18 @@
           </div>
         </div>
       </div>
-
-      <!-- İkinci Slide -->
+          @foreach(SliderModel slider in sliders)
+    {
       <div class="carousel-item">
-        <img src="/taskopru_sarimsak0.jpg" class="d-block w-100" alt="Taşköprü Sarımsak">
+        <img src="@images.FirstOrDefault(x => x.SliderId == slider.Id).ImageUrl" class="d-block w-100" alt="Taşköprü Sarımsak">
         <div class="carousel-caption d-flex flex-column justify-content-center align-items-center h-100 text-center pb-5">
           <div class="bg-dark bg-opacity-50 p-4 p-md-5 rounded-4 shadow-lg slide-fade-in">
-            <h2 class="display-5 fw-bold mb-3 text-white">Taşköprü'nün En Kaliteli Sarımsağı</h2>
-            <p class="lead fs-5 text-white-50">Yüzyıllık geleneksel yöntemlerle yetiştirilen, doğal ve katkısız sarımsaklar.</p>
+            <h2 class="display-5 fw-bold mb-3 text-white">@slider.ContentHeader</h2>
+            <p class="lead fs-5 text-white-50">@slider.ContentText</p>
           </div>
         </div>
       </div>
-
-      <!-- Üçüncü Slide -->
-      <div class="carousel-item">
-        <img src="/taskopru_sarimsak01.jpg" class="d-block w-100" alt="Organik Sarımsak">
-        <div class="carousel-caption d-flex flex-column justify-content-center align-items-center h-100 text-center pb-5">
-          <div class="bg-dark bg-opacity-50 p-4 p-md-5 rounded-4 shadow-lg slide-fade-in">
-            <h2 class="display-5 fw-bold mb-3 text-white">%100 Organik ve Doğal</h2>
-            <p class="lead fs-5 text-white-50">Kimyasal gübre ve ilaç kullanılmadan, tamamen organik olarak yetiştirilir.</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Dördüncü Slide -->
-      <div class="carousel-item">
-        <img src="/taskopru_sarimsak02.jpg" class="d-block w-100" alt="Taze Sarımsak">
-        <div class="carousel-caption d-flex flex-column justify-content-center align-items-center h-100 text-center pb-5">
-          <div class="bg-dark bg-opacity-50 p-4 p-md-5 rounded-4 shadow-lg slide-fade-in">
-            <h2 class="display-5 fw-bold mb-3 text-white">Tarladan Sofranıza</h2>
-            <p class="lead fs-5 text-white-50">Her gün taze hasat edilen sarımsaklar, aynı gün sizlere ulaştırılır.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
+    }
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Önceki</span>
@@ -66,8 +48,6 @@
     </button>
 </div>
 </div>
-
-<!-- Üretim Süreci -->
 <section class="py-5">
   <div class="container">
     <div class="text-center mb-5 animate-on-scroll" data-animation="fade-up">
@@ -120,7 +100,7 @@
   </div>
 </section>
 
-<div class="text-center my-5 animate-on-scroll" data-animation="fade-up">
+<div class="text-center my-5 animate-on-scroll" data-animation="fade-up" style="border-radius: 10%;">
   <h1 class="display-2 fw-bold mb-3">
     Organik Sarımsak
   </h1>
@@ -132,9 +112,9 @@
 
 
 <!-- Kartlar -->
-<div class="row row-cols-1 row-cols-md-2 g-4 text-center justify-content-center mb-5">
+<div class="row row-cols-1 row-cols-md-2 g-4 text-center justify-content-center mb-5" style="border-radius: 10%;">
   <div class="col-md-5 col-lg-5 animate-on-scroll" data-animation="slide-left" data-delay="0">
-    <div class="card h-100 hover-lift">
+    <div class="card h-100 hover-lift" style="border-radius: 5%;">
       <img src="/taskopru_sarimsak01.jpg" class="card-img-top" alt="Organik Sarımsak">
       <div class="card-body">
         <h5 class="card-title fw-bold">Organik Sarımsak</h5>
@@ -143,8 +123,8 @@
     </div>
   </div>
   
-  <div class="col-md-5 col-lg-5 animate-on-scroll" data-animation="slide-right" data-delay="100">
-    <div class="card h-100 hover-lift">
+  <div class="col-md-5 col-lg-5 animate-on-scroll" data-animation="slide-right" data-delay="100" style="border-radius: 10%;">
+    <div class="card h-100 hover-lift" style="border-radius: 5%;">
       <img src="/taskopru_sarimsak01.jpg" class="card-img-top" alt="Taze Hasat">
       <div class="card-body">
         <h5 class="card-title fw-bold">Taze Hasat</h5>
@@ -153,8 +133,8 @@
     </div>
   </div>
   
-  <div class="col-md-5 col-lg-5 animate-on-scroll" data-animation="slide-left" data-delay="200">
-    <div class="card h-100 hover-lift">
+  <div class="col-md-5 col-lg-5 animate-on-scroll" data-animation="slide-left" data-delay="200" style="border-radius: 10%;">
+    <div class="card h-100 hover-lift" style="border-radius: 5%;">
       <img src="/taskopru_sarimsak02.jpg" class="card-img-top" alt="Geleneksel Yöntemler">
       <div class="card-body">
         <h5 class="card-title fw-bold">Geleneksel Yöntemler</h5>
@@ -164,7 +144,7 @@
   </div>
   
   <div class="col-md-5 col-lg-5 animate-on-scroll" data-animation="slide-right" data-delay="300">
-    <div class="card h-100 hover-lift">
+    <div class="card h-100 hover-lift" style="border-radius: 5%;">
       <img src="/taskopru_sarimsak0.jpg" class="card-img-top" alt="Kalite Garantisi">
       <div class="card-body">
         <h5 class="card-title fw-bold">Kalite Garantisi</h5>
@@ -173,18 +153,3 @@
     </div>
   </div>
 </div>
-
-<!-- CTA Section -->
-<section class="py-5 bg-primary bg-gradient text-white">
-  <div class="container">
-    <div class="row align-items-center">
-      <div class="col-lg-8 text-center text-lg-start mb-4 mb-lg-0 animate-on-scroll" data-animation="slide-left">
-        <h2 class="display-5 fw-bold mb-3">Doğal ve Organik Sarımsak için Bize Katılın!</h2>
-        <p class="lead mb-0">Sağlıklı yaşamın kapılarını aralayın, doğanın tadını çıkarın.</p>
-      </div>
-      <div class="col-lg-4 text-center text-lg-end animate-on-scroll" data-animation="slide-right">
-        @Html.ActionLink("Ürünlerimizi İnceleyin", "Products", "Home", null, new { @class = "btn btn-light btn-lg px-5 py-3 fw-semibold shadow" })
-      </div>
-    </div>
-  </div>
-</section>
