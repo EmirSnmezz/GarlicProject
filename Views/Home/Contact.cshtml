@@ -1,3 +1,5 @@
+@model FormModel
+
 <!-- Hero Section -->
 <div class="position-relative bg-dark text-white" style="padding-top: 10%; margin-top:5%">
   <img src="/taskopru_sarimsak01.jpg" class="position-absolute w-100 h-100 top-0 start-0" style="object-fit: cover; opacity: 0.3;" alt="İletişim">
@@ -25,7 +27,7 @@
             <h5 class="fw-bold mb-3">Telefon</h5>
             <p class="text-muted mb-2">Bizi hemen arayın</p>
             <a href="tel:+905551234567" class="h5 text-primary text-decoration-none fw-bold">
-              +90 555 123 45 67
+              +90 537 604 37 19
             </a>
             <p class="text-muted small mt-3 mb-0">Pzt-Cmt: 09:00 - 18:00</p>
           </div>
@@ -58,8 +60,10 @@
             </div>
             <h5 class="fw-bold mb-3">Adres</h5>
             <p class="text-muted mb-2">Bizi ziyaret edin</p>
-            <p class="h6 text-dark mb-2">Taşköprü Mah.</p>
-            <p class="text-muted mb-0">Kastamonu, Türkiye 37300</p>
+            <p class="h6 text-dark mb-2">Halaçlı Köyü</p>
+            <p class="h6 text-dark mb-2">Halaçlı Küme Evleri</p>
+            <p class="h6 text-dark mb-2">No: 98/1</p>
+            <p class="text-muted mb-0">Kastamonu, Merkez 37300</p>
           </div>
         </div>
       </div>
@@ -77,47 +81,41 @@
           <h2 class="fw-bold mb-4">Mesaj Gönderin</h2>
           <p class="text-muted mb-4">Formu doldurun, en kısa sürede size geri dönelim.</p>
           
-          <form>
+          @using (Html.BeginForm("CreateOrder", "Home", FormMethod.Post))
+          {
             <div class="row g-3">
               <div class="col-md-6">
                 <label for="firstName" class="form-label fw-semibold">Ad</label>
-                <input type="text" class="form-control form-control-lg" id="firstName" placeholder="Adınız" required>
+                @Html.TextBoxFor(x => x.Name, new { @class = "form-control form-control-lg", placeholder = "Adınız", @required= "required" })
               </div>
               <div class="col-md-6">
                 <label for="lastName" class="form-label fw-semibold">Soyad</label>
-                <input type="text" class="form-control form-control-lg" id="lastName" placeholder="Soyadınız" required>
+                @Html.TextBoxFor(x => x.Surname, new { @class = "form-control form-control-lg", placeholder = "Soyadınız" })
               </div>
               <div class="col-12">
                 <label for="email" class="form-label fw-semibold">E-posta</label>
-                <input type="email" class="form-control form-control-lg" id="email" placeholder="ornek@email.com" required>
+                @Html.TextBoxFor(x => x.Email, new { @class = "form-control form-control-lg", placeholder = "ornek@email.com", @required= "required", @type="email" })
               </div>
               <div class="col-12">
                 <label for="phone" class="form-label fw-semibold">Telefon</label>
-                <input type="tel" class="form-control form-control-lg" id="phone" placeholder="+90 5XX XXX XX XX">
+                @Html.TextBoxFor(x => x.PhoneNumber, new { @class = "form-control form-control-lg", placeholder = "+90 5XX XXX XX XX", @required= "required", @type="phone" })
               </div>
               <div class="col-12">
                 <label for="subject" class="form-label fw-semibold">Konu</label>
-                <select class="form-select form-select-lg" id="subject" required>
-                  <option selected disabled value="">Konu seçin...</option>
-                  <option value="1">Ürün Bilgisi</option>
-                  <option value="2">Toptan Satış</option>
-                  <option value="3">Sipariş Takibi</option>
-                  <option value="4">Öneri & Şikayet</option>
-                  <option value="5">Diğer</option>
-                </select>
+                @Html.DropDownListFor(
+            x => x.Subject,
+            new SelectList(
+              new List<string>(){"Ürün Bilgisi", "Toptan Satış", "Sipariş Takibi", "Öneri & Şikayet", "Diğer"}),
+            "Konu Seçiniz",
+            new { @class = "form-select" })
               </div>
               <div class="col-12">
                 <label for="message" class="form-label fw-semibold">Mesajınız</label>
-                <textarea class="form-control form-control-lg" id="message" rows="5" 
-                          placeholder="Mesajınızı buraya yazın..." required></textarea>
-              </div>
-              <div class="col-12">
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="consent" required>
-                  <label class="form-check-label small text-muted" for="consent">
-                    <a href="#" class="text-primary">KVKK Aydınlatma Metni</a>'ni okudum ve kabul ediyorum.
-                  </label>
-                </div>
+                @Html.TextAreaFor(m => m.Message, new { 
+                @class = "form-control", 
+                rows = "4", 
+                required = "required", 
+                placeholder = "Mesajınızı buraya yazın..."})
               </div>
               <div class="col-12">
                 <button type="submit" class="btn btn-primary btn-lg w-100 py-3 fw-semibold">
@@ -125,7 +123,8 @@
                 </button>
               </div>
             </div>
-          </form>
+          } 
+                </button> 
         </div>
       </div>
 
