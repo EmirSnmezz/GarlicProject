@@ -1,0 +1,93 @@
+@model FormModel
+
+@{
+    Layout = "_adminLayout";
+}
+
+<div class="container-fluid px-4 py-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h4 class="mb-1 fw-semibold">Sipariş Detayı</h4>
+            <span class="text-muted">Siparişe ait tüm bilgiler</span>
+        </div>
+            @Html.ActionLink("Geri Dön", "Orders", "Admin",null, new{@class="btn btn-secondary"})
+            @*
+            <a href="mailto:@Model.Email" class="btn btn-primary">
+                Müşteriye Mail Gönder
+            </a>
+            *@
+        </div>
+    </div>
+    <div class="card border-0 shadow-sm position-relative">
+
+        <div class="position-absolute top-0 end-0 mt-3 me-3">
+            @if (Model.IsActive)
+            {
+                <span class="badge rounded-pill bg-success px-4 py-2">
+                    Aktif
+                </span>
+            }
+            else
+            {
+                <span class="badge rounded-pill bg-danger px-4 py-2">
+                    Aktif Değil
+                </span>
+            }
+        </div>
+
+        <div class="card-body">
+            <div class="row">
+
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <h6 class="text-uppercase text-muted mb-3">
+                        Müşteri Bilgileri
+                    </h6>
+                    <table class="table table-borderless align-middle">
+                        <tbody>
+                            <tr>
+                                <th class="text-muted w-25">Ad Soyad</th>
+                                <td class="fw-medium">
+                                    @Model.Name @Model.Surname
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="text-muted">E-posta</th>
+                                <td>@Model.Email</td>
+                            </tr>
+                            <tr>
+                                <th class="text-muted">Telefon</th>
+                                <td>@Model.PhoneNumber</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="col-lg-6">
+                    <h6 class="text-uppercase text-muted mb-3">
+                        Sipariş Bilgileri
+                    </h6>
+
+                    <table class="table table-borderless align-middle">
+                        <tbody>
+                            <tr>
+                                <th class="text-muted w-25">Konu</th>
+                                <td class="fw-medium">
+                                    @Model.Subject
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="text-muted">Mesaj</th>
+                                <td class="text-secondary" style="line-height:1.6;">
+                                    @Model.Message
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
