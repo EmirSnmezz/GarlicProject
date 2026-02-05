@@ -1,7 +1,10 @@
+using System.IO.Compression;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
+[Authorize (AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 [Route("/Admin")]
 public class AdminController : Controller
 {
@@ -9,18 +12,28 @@ public class AdminController : Controller
     IProductService _productService;
     IProductCategoryModelService _productCategoryModel;
     IImageService _imageService;
-    public AdminController(ISliderService sliderService, IProductService productService, IProductCategoryModelService productCategoryModelService,IImageService imageService)
-    {
-        _sliderService = sliderService;
-        _productService = productService;
-        _productCategoryModel = productCategoryModelService;
-        _imageService = imageService;
-    }
+    IFormService _formService;
+    IWebHostEnvironment _env;
+    public AdminController(
+    ISliderService sliderService,
+    IProductService productService,
+    IProductCategoryModelService productCategoryModelService,
+    IImageService imageService,
+    IFormService formService,
+    IWebHostEnvironment env)
+{
+    _sliderService = sliderService;
+    _productService = productService;
+    _productCategoryModel = productCategoryModelService;
+    _imageService = imageService;
+    _formService = formService;
+    _env = env;
+}
 
     [Route("/Admin/")]
     public IActionResult Index()
     {
-        return RedirectToAction("Slider");
+        return RedirectToAction(nameof(Slider));
     }
 
     [HttpGet("Slider")]
@@ -38,6 +51,7 @@ public class AdminController : Controller
         var result = _sliderService.GetAll().Data.FirstOrDefault(x => x.Id == id);
 
         var image = _imageService.GetAll(x => x.SliderId == id).Data.FirstOrDefault(x => x.SliderId == id);
+        System.Console.WriteLine(image.ImageUrl);
         ViewBag.SliderImage = image;
         return View("SliderEdit", result);
     }
@@ -49,18 +63,36 @@ public class AdminController : Controller
     }
 
     [HttpPost("UpdateSlider")]
-    public IActionResult UpdateSlider(SliderModel sliderModel)
+    public IActionResult UpdateSlider(SliderModel sliderModel, IFormFile image)
     {
         var entity = _sliderService.GetAll().Data.FirstOrDefault(x => x.Id == sliderModel.Id);
-    if (entity == null)
-        return NotFound();
 
-    entity.ContentHeader = sliderModel.ContentHeader;
-    entity.ContentText = sliderModel.ContentText;
+        if (entity == null)
+            return NotFound();
 
-    _sliderService.Update(entity);
+        entity.ContentHeader = sliderModel.ContentHeader;
+        entity.ContentText = sliderModel.ContentText;
 
-    return RedirectToAction("Slider");
+        _sliderService.Update(entity);
+
+        var oldImage = _imageService.GetAll(x => x.SliderId == sliderModel.Id).Data.FirstOrDefault(x => x.SliderId == sliderModel.Id);
+
+        if(oldImage is not null)
+            {
+                var oldImagePath =  Path.Combine(_env.WebRootPath, oldImage.ImageUrl);    
+                if(System.IO.File.Exists(Path.GetFullPath(_env.WebRootPath + oldImage.ImageUrl)))
+                {
+                    System.IO.File.Delete(Path.Combine(_env.WebRootPath + oldImage.ImageUrl));    
+                    var fileName = Guid.NewGuid().ToString() + image.FileName;
+                    System.Console.WriteLine(fileName);
+                    var path = Path.Combine(_env.WebRootPath, fileName);
+                    using var stream = new FileStream(path, FileMode.Create);
+                    image.CopyTo(stream);
+                    oldImage.ImageUrl = fileName;
+                    _imageService.Update(oldImage);
+                }
+            }
+        return RedirectToAction(nameof(Slider));
     }
 
     [HttpGet("SliderDelete")]
@@ -69,7 +101,15 @@ public class AdminController : Controller
         var entity = _sliderService.GetAll().Data.FirstOrDefault(x=> x.Id == id);
         _sliderService.Remove(entity);
 
-        return RedirectToAction("Slider");
+        var sliderImage = _imageService.GetAll(x => x.SliderId == id).Data.FirstOrDefault(x => x.SliderId == id);
+        
+        if (System.IO.File.Exists(Path.GetFullPath(_env.WebRootPath + sliderImage.ImageUrl)))
+        {
+            System.IO.File.Delete(Path.Combine(_env.WebRootPath + sliderImage.ImageUrl));
+            _imageService.Remove(sliderImage);
+        }        
+
+        return RedirectToAction(nameof(Slider));
     }
 
     [HttpPost("AddSlider")]
@@ -81,7 +121,7 @@ public class AdminController : Controller
         _sliderService.Add(sliderModel);
 
          string fileName = Guid.NewGuid().ToString() + Path.GetExtension(imageFile.FileName);
-         var path = Path.Combine("wwwroot", fileName);
+         var path = Path.Combine(_env.WebRootPath, fileName);
          using var stream = new FileStream(path, FileMode.Create);
          imageFile.CopyTo(stream);
 
@@ -93,7 +133,7 @@ public class AdminController : Controller
 
          _imageService.Add(image);
         
-        return RedirectToAction("Slider");
+        return RedirectToAction(nameof(Slider));
     }
 
     [HttpGet("Products")]
@@ -111,7 +151,7 @@ public class AdminController : Controller
         ViewBag.Images = images;
 
 
-        return View("ProductIndex", result);
+        return View(result);
     }
 
     [HttpGet("AddProduct")]
@@ -126,7 +166,7 @@ public class AdminController : Controller
     public IActionResult ProductAdd(ProductModel product, IFormFile imageFile)
     {
         var fileName = Guid.NewGuid() + Path.GetExtension(imageFile.FileName);
-        var path = Path.Combine("wwwroot", fileName);
+        var path = Path.Combine(_env.WebRootPath, fileName);
 
         using var stream = new FileStream(path, FileMode.Create);
         imageFile.CopyTo(stream);
@@ -146,7 +186,7 @@ public class AdminController : Controller
          product.ImageId = image.Id;
         _productService.Add(product);   
         
-        return RedirectToAction("Products");
+        return RedirectToAction(nameof(Products));
         }
 
         return BadRequest();
@@ -179,7 +219,7 @@ public class AdminController : Controller
 
             _productService.Update(result);
 
-            return RedirectToAction("Products");
+            return RedirectToAction(nameof(Products));
         }
         
         return NotFound();
@@ -194,7 +234,18 @@ public class AdminController : Controller
         {
             _productService.Remove(result);
 
-            return RedirectToAction("Products");
+            ImageModel image = _imageService.GetAll(x => x.ProductId == id).Data.FirstOrDefault(x => x.ProductId == id);
+
+            if(image is not null)
+            {
+                if (System.IO.File.Exists(Path.GetFullPath(_env.WebRootPath + image.ImageUrl)))
+                {
+                    System.IO.File.Delete(Path.Combine(_env.WebRootPath + image.ImageUrl));
+                    _imageService.Remove(image);
+                }     
+            }
+
+            return RedirectToAction(nameof(Products));
         }
 
         return NotFound();
@@ -217,7 +268,7 @@ public class AdminController : Controller
     public IActionResult AddCategory(ProductCategoryModel category)
     {
         _productCategoryModel.Add(category);
-        return RedirectToAction("Categories");
+        return RedirectToAction(nameof(Categories));
     }
 
      [HttpGet("DeleteCategory")]
@@ -228,7 +279,7 @@ public class AdminController : Controller
 
         if(deleteResult.IsSuccess)
         {
-            return RedirectToAction("Categories");
+            return RedirectToAction(nameof(Categories));
         }
 
         return BadRequest();
@@ -251,16 +302,39 @@ public class AdminController : Controller
              result.Name = category.Name;
             _productCategoryModel.Update(result);
 
-            return RedirectToAction("Categories");
+            return RedirectToAction(nameof(Categories));
         }
 
-        return RedirectToAction("Categories");
+        return RedirectToAction(nameof(Categories));
     }
 
     [HttpGet("Orders")]
     public IActionResult Orders()
     {
+        var result = _formService.GetAll(null).Data;
+        return View(result);
+    }
+
+    [HttpGet("OrderDetail")]
+    public IActionResult OrderDetail(string id)
+    {
+        var result = _formService.GetAll(x => x.Id == id).Data.FirstOrDefault();
+
+        if(result is not null)
+        {
+            return View(result);
+        }
+
         return View();
+    }
+
+    [HttpGet("ChangeOrderStatus")]
+    public IActionResult ChangeOrderStatus(string id)
+    {   
+        var order = _formService.GetAll(x => x.Id == id).Data.FirstOrDefault(x => x.Id == id);
+        _formService.ChangeStatus(order);
+
+        return RedirectToAction(nameof(Orders));
     }
 
        [HttpGet("Users")]
